@@ -55,8 +55,8 @@ SOCIAL = (
 
 
 DEFAULT_PAGINATION = 15
-STATIC_PATHS = ['images', 'files', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},} 
+STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014']
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': './CNAME'}, } 
 READERS = {"html": None}
 
 # Uncomment following line if you want document-relative URLs when developing
