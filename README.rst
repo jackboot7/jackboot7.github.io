@@ -7,3 +7,4 @@ jackboot7.github.io
 
 Pelican based personal blog.
 
+The `source` has the Pelican files and the blog's sources. The `master` branch is generated automatically by Travis-CI.
