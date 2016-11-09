@@ -107,5 +107,7 @@ cf_upload: publish
 github: publish
 	pelican content -o output -s publishconf.py
 	ghp-import -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
+	git push -fq https://$(GHTOKEN)@github.com/$(TRAVIS_REPO_SLUG).git master
+
 
 .PHONY: html help clean regenerate serve devserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github
