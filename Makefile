@@ -106,6 +106,7 @@ cf_upload: publish
 
 github: publish
 	pelican content -o output -s publishconf.py
+	ghp-import -m "Updating blog" -b master output
 	@git push -fq https://$(GHUSER):$(GHTOKEN)@github.com/$(TRAVIS_REPO_SLUG).git master
 
 
