@@ -106,6 +106,6 @@ cf_upload: publish
 
 github: publish
 	pelican content -o output -s publishconf.py
-	ghp-import -r https://${GH_TOKEN}@github.com:jackboot7/jackboot7.github.io.git -b $(GITHUB_SOURCE_BRANCH) $(OUTPUTDIR)
+	ghp-import -b $(GITHUB_PAGES_BRANCH) $(OUTPUTDIR)
 
 .PHONY: html help clean regenerate serve devserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github
