@@ -105,8 +105,7 @@ cf_upload: publish
 	cd $(OUTPUTDIR) && swift -v -A https://auth.api.rackspacecloud.com/v1.0 -U $(CLOUDFILES_USERNAME) -K $(CLOUDFILES_API_KEY) upload -c $(CLOUDFILES_CONTAINER) .
 
 github: publish
-    pelican content -o output -s publishconf.py
-	ghp-import -b $(GITHUB_SOURCE_BRANCH) $(OUTPUTDIR)
-	git push origin $(GITHUB_PAGES_BRANCH)
+	pelican content -o output -s publishconf.py
+	ghp-import -r https://${GH_TOKEN}@github.com:jackboot7/jackboot7.github.io.git -b $(GITHUB_SOURCE_BRANCH) $(OUTPUTDIR)
 
 .PHONY: html help clean regenerate serve devserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github
