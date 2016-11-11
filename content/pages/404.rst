@@ -1,0 +1,13 @@
+Not Found
+=========
+
+:slug: 404-not-found
+:status: hidden
+:save_as: 404.html
+:lang: en
+
+The requested page could not be found in this server. Perhaps you might want to check the `archives`_ ?
+
+
+
+.. _`archives`: /archives.html
