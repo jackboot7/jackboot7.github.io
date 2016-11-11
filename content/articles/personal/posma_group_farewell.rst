@@ -6,7 +6,7 @@ A Farewell to an Great Company
 :tags: personal, work, posma, posma group, career
 :lang: en
 
-This month marks my final month as a CTO/Lead at `Posma Group`_. It's been six years of ups and downs, working in varied and interesting projects, but most of all, working with amazing people, both coworkers and clients. In six years, we went from just the 3 cofunders to a team of 20+ between two offices, working in lots of different projects.
+This month marks my final month as a CTO/Lead at `Posma Group`_. It's been six years of ups and downs, working in varied and interesting projects, but most of all, working with amazing people, both coworkers and clients. In six years, we went from just the 3 cofounders to a team of 20+ between two offices, working in lots of different projects.
 
 Thanks to all the people who helped me grow and learn along the way. It was a great experience in so many ways. 
 
