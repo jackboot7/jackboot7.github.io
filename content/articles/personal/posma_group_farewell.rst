@@ -1,4 +1,4 @@
-A Farewell to an Great Company
+A Farewell to a Great Company
 ===============================
 
 :date: 2016-11-08 09:30
