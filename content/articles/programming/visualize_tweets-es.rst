@@ -6,7 +6,7 @@ Visualizando los tweets durante el fin de semana de las elecciones
 :slug: visualizing-tweets
 :tags: data, tweets, twitter, elections, visualize, folium, python, matplotlib, pylab
 :author: Luis Alberto Santana
-:status: published
+:status: draft
 :lang: es
 
 
