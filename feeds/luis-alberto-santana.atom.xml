@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Luis Alberto Santana</title><link href="http://www.jackboot7.com/" rel="alternate"></link><link href="http://www.jackboot7.com/feeds/luis-alberto-santana.atom.xml" rel="self"></link><id>http://www.jackboot7.com/</id><updated>2016-11-08T09:30:00-05:30</updated><entry><title>A Farewell to a Great Company</title><link href="http://www.jackboot7.com/farewell-posma-group.html" rel="alternate"></link><updated>2016-11-08T09:30:00-05:30</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2016-11-08:farewell-posma-group.html</id><summary type="html">&lt;p&gt;This month marks my final month as a CTO/Lead at &lt;a class="reference external" href="http://www.posmagroup.com/"&gt;Posma Group&lt;/a&gt;. It's been six years of ups and downs, working in varied and interesting projects, but most of all, working with amazing people, both coworkers and clients. In six years, we went from just the 3 cofounders to a team of 20+ between two offices, working in lots of different projects.&lt;/p&gt;
+&lt;p&gt;Thanks to all the people who helped me grow and learn along the way. It was a great experience in so many ways.&lt;/p&gt;
+&lt;p&gt;I wish all the luck to Jorge and Oscar in their aim to keep growing the company and the great team of Posma Group. I'm sure we'll work together in some project, sometime in the future!&lt;/p&gt;
+&lt;p&gt;Now, let's see what comes next!&lt;/p&gt;
+&lt;img alt="Posma Group 2016" class="align-center" src="http://www.jackboot7.com/images/posma_group_2016.jpg" style="width: 750px; height: 354px;" /&gt;
+</summary><category term="personal"></category><category term="work"></category><category term="posma"></category><category term="posma group"></category><category term="career"></category></entry><entry><title>Visualizing Tweets During Election Weekend</title><link href="http://www.jackboot7.com/visualizing-tweets.html" rel="alternate"></link><updated>2015-12-15T18:04:00-05:30</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2015-12-10:visualizing-tweets.html</id><summary type="html">&lt;p&gt;On Sunday (Dec. 06) parliamentary elections were held in Venzuela. I took the opportunity to fetch some data from Twitter's public stream and use graphics to show what was happening in &amp;quot;&lt;cite&gt;social media&lt;/cite&gt;&amp;quot; during that day. To achieve this I relied in the Python programming language.&lt;/p&gt;
+&lt;div class="section" id="the-data"&gt;
+&lt;h2&gt;&lt;a class="reference internal" href="#the-data"&gt;The Data&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;I decided to monitor all geolocalized tweets with my home city (Caracas) as origin over a period of five days, two days before the elections, the election day, and two days after it.&lt;/p&gt;
+&lt;p&gt;To fetch the data, I used the &lt;a class="reference external" href="https://pypi.python.org/pypi/twython/"&gt;Twython&lt;/a&gt; library since I've worked with it before. Therefore, it should be easy to setup a quick script to fetch the data and save it in a text file.&lt;/p&gt;
+&lt;p&gt;Once the &lt;cite&gt;API&lt;/cite&gt; and &lt;cite&gt;OAUTH&lt;/cite&gt; keys are correctly following &lt;a class="reference external" href="http://twython.readthedocs.org/en/latest/usage/starting_out.html"&gt;Twython's documentation&lt;/a&gt;, the next step is to fetch the data originating in certain location, passing it as a parameter to the streaming API. Twitter uses a set of bounding boxes to track the location of a tweet and only geolocated Tweets falling within the requested bounding boxes will be included.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;&lt;span class="o"&gt;,&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;twython&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;TwythonStreamer&lt;/span&gt;
+
+&lt;span class="n"&gt;caracas_location&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-67.017225,10.419554,-66.778716,10.52006&amp;quot;&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;MyStreamer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TwythonStreamer&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;on_success&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'coordinates'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="ow"&gt;not&lt;/span&gt; &lt;span class="bp"&gt;None&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'tweets.txt'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+                &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+                &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;on_error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;status_code&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'errors.txt'&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'a'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'error: {0}: {1}'&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;format&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;status_code&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+
+
+&lt;span class="n"&gt;stream&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MyStreamer&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'APP_KEY'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'APP_SECRET'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt;
+                        &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'OAUTH_TOKEN'&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;'OAUTH_TOKEN_SECRET'&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+
+&lt;span class="n"&gt;stream&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;statuses&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;locations&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;caracas_location&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Since I just wanted to fetch geolocalized tweets, I checked for the existance of the &lt;cite&gt;coordinates&lt;/cite&gt; entity in the Tweet object and only save the tweets with geolocation data (lat/long). After running the script for a few days I have around of ~50,000 tweets to play with.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="visualizing-the-data"&gt;
+&lt;h2&gt;&lt;a class="reference internal" href="#visualizing-the-data"&gt;Visualizing the Data&lt;/a&gt;&lt;/h2&gt;
+&lt;div class="section" id="where-were-the-tweets-located"&gt;
+&lt;h3&gt;&lt;a class="reference internal" href="#where-were-the-tweets-located"&gt;Where were the tweets located?&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;The first that I wanted to do with the data was to see what was the origin of the tweets during that period. I decided to use a &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Heat_map"&gt;heatmap&lt;/a&gt; on top of a geographical map of the city. To do it, I used the development version of the &lt;a class="reference external" href="http://folium.readthedocs.org/en/latest/"&gt;Folium&lt;/a&gt; library, which implement mapping in Python on top of &lt;cite&gt;Leafleat.js&lt;/cite&gt; and its plugins.&lt;/p&gt;
+&lt;img alt="Heatmap" class="align-center" src="http://www.jackboot7.com/images/heatmap.jpeg" style="width: 750px; height: 450px;" /&gt;
+&lt;p&gt;Click here to see an interactive &lt;a class="reference external" href="http://www.jackboot7.com/files/heatmap.html"&gt;full version&lt;/a&gt; of the heatmap (&lt;strong&gt;Warning&lt;/strong&gt; big file!)&lt;/p&gt;
+&lt;p&gt;The code used to generate the heatmap, once I've read the text file into a list named &lt;cite&gt;data&lt;/cite&gt; is as simple as:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;Creating a map centered in Caracas (&lt;cite&gt;10.497084, -66.8854171&lt;/cite&gt;).&lt;/li&gt;
+&lt;li&gt;Add each data point to the map using the &lt;cite&gt;add_children&lt;/cite&gt; method.&lt;/li&gt;
+&lt;li&gt;Writing the html file.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;folium&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;folium&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;plugins&lt;/span&gt;
+
+&lt;span class="c"&gt;# Create a heatmap with the data.&lt;/span&gt;
+&lt;span class="n"&gt;heatmap_map&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;folium&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;location&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mf"&gt;10.497084&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mf"&gt;66.8854171&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;zoom_start&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;12&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;heatmap_map&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_children&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;plugins&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;HeatMap&lt;/span&gt;&lt;span class="p"&gt;([[&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;tweet&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;coordinates&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;][&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;coordinates&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;tweet&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;data&lt;/span&gt;&lt;span class="p"&gt;]]))&lt;/span&gt;
+&lt;span class="n"&gt;heatmap_map&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;save&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;heatmap.html&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: Twitter coordinates are formated as &lt;cite&gt;geoJSON&lt;/cite&gt; that is: longitude first, and then latitude. The code swaps them to add &lt;cite&gt;(lat, long)&lt;/cite&gt; points to the map.&lt;/p&gt;
+&lt;p&gt;In the heatmap, we can clearly see the parks and protected areas in Caracas with zero activity. The same way, there is a lot less activiy in &lt;a class="reference external" href="https://en.wikipedia.org/wiki/Caricuao"&gt;Caricuao&lt;/a&gt;, than in the rest of the city. That would be an expected result in the parks and protected areas, but since Caricuao is a large neighborhood the results are clearly interesting.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="how-does-activity-look"&gt;
+&lt;h3&gt;&lt;a class="reference internal" href="#how-does-activity-look"&gt;How does activity look?&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;So, there's a heatmap of the location of the tweets, but how can we represent the activity over the five days?&lt;/p&gt;
+&lt;p&gt;I thought that a calendar type chart, such as the one that shows the contributions activity on &lt;a class="reference external" href="https://github.com"&gt;Github&lt;/a&gt; profiles, was an interesting way to represent the data visually. Grouping the tweets by day and hours in cells, and increasing the intensity of the cell depending on the total amount of tweets during that moment.&lt;/p&gt;
+&lt;p&gt;To achieve this, I decided to use &lt;a class="reference external" href="http://matplotlib.org"&gt;matplotlib&lt;/a&gt; as the plotting library, insted of using a Javascript based library such as &lt;cite&gt;D3.js&lt;/cite&gt;.&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.ticker&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;FuncFormatter&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;MaxNLocator&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="kn"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Load the dataset into a nested list with the `Date` and the `hour` data&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+
+&lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;figsize&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="n"&gt;image&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;data_array&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;cax&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ax&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;imshow&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;image&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;cmap&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;cm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;magma&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;interpolation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'nearest'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c"&gt;#&lt;/span&gt;
+&lt;span class="c"&gt;# Add some parameters for the ticks&lt;/span&gt;
+&lt;span class="c"&gt;#&lt;/span&gt;
+
+&lt;span class="c"&gt;# Add colorbar/legend&lt;/span&gt;
+&lt;span class="n"&gt;cbar&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fig&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;colorbar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;cax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;orientation&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;'horizontal'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;subplots_adjust&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;wspace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;hspace&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;5&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;plt&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;savefig&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tweet_frequency_heatmap.png&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;With some visual adjustments such as adding labels to the ticks, I've got the graphic I wanted.&lt;/p&gt;
+&lt;img alt="Tweets by hour" class="align-center" src="http://www.jackboot7.com/images/tweet_frequency_heatmap.png" style="width: 800px; height: 320px;" /&gt;
+&lt;p&gt;&lt;strong&gt;NOTE&lt;/strong&gt;: The lack of tweets during the morning of December 4, is due the absence of data in that period.&lt;/p&gt;
+&lt;p&gt;As expected, after midnight, when most people are sleeping, the amount of tweets is very close to zero in normal days (Dec 04, Dec 05, Dec 08). On the election day, the graph shows above &amp;quot;normal&amp;quot; activity, and we can see the exact moment when the results of the election were announced on national TV. Between 12 a.m and 2 a.m. of Dec. 07 the amount of tweets in Caracas duplicated.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;More visualizations coming soon!&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="tools"&gt;
+&lt;h2&gt;&lt;a class="reference internal" href="#tools"&gt;Tools&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;This little project was used to research and learn the basics of the tooling available to represent data visually (graphs, charts, maps, etc.) some of the tools researched were:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://matplotlib.org"&gt;Matplotlib&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://folium.readthedocs.org/en/latest/"&gt;Folium&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://pypi.python.org/pypi/mplleaflet/0.0.5"&gt;mplleaflet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://plot.ly/"&gt;Plotly&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://leafletjs.com"&gt;leaflet.js&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can check the Python wiki for a &lt;a class="reference external" href="https://wiki.python.org/moin/NumericAndScientific/Plotting"&gt;comprehensive list&lt;/a&gt; of libraries and resources for plotting data.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="data"></category><category term="tweets"></category><category term="twitter"></category><category term="elections"></category><category term="visualize"></category><category term="folium"></category><category term="python"></category><category term="matplotlib"></category><category term="pylab"></category></entry><entry><title>Quick tip: Adding Variables to env in a Virtualenv (for development purpose)</title><link href="http://www.jackboot7.com/virtualenv-add-vars-to-env.html" rel="alternate"></link><updated>2015-07-16T13:40:00-05:30</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2015-07-16:virtualenv-add-vars-to-env.html</id><summary type="html">&lt;p&gt;If you're working with third party APIs, you might find code like &lt;cite&gt;YOUR_SECRET_KEY=&amp;quot;some secret api key&amp;quot;&lt;/cite&gt; in your source code, this is a bad practices for a lot of reasons (security, source code sharing, etc). Instead, the recommended way to manage this kind of situation is to add the value as a enviroment variable, and read it in your code with something like this:&lt;/p&gt;
+&lt;pre class="code python literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;os&lt;/span&gt;
+&lt;span class="n"&gt;os&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;environ&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;'YOUR_SECRET_KEY'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;So, how do you avoid to add the variable to the enviroment each time you do some coding? If you're working with virtualenv you simply add it in the &lt;cite&gt;env/bin/activate&lt;/cite&gt; script:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;YOUR_SECRET_KEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;some secret api key&amp;quot;&lt;/span&gt;
+&lt;span class="nb"&gt;export &lt;/span&gt;YOUR_SECRET_KEY
+&lt;/pre&gt;
+</summary><category term="python"></category><category term="enviroment"></category><category term="virtualenv"></category><category term="export"></category><category term="bash"></category></entry><entry><title>Debian (development tips)</title><link href="http://www.jackboot7.com/debian-development-tips.html" rel="alternate"></link><updated>2015-10-29T16:38:00-05:30</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2014-12-13:debian-development-tips.html</id><summary type="html">&lt;p&gt;These are some extra steps that I've found necessary when starting development in a recently-installed Debian machine.&lt;/p&gt;
+&lt;div class="section" id="jpeg-support-in-pil-and-pillow"&gt;
+&lt;h2&gt;Jpeg support in PIL and pillow.&lt;/h2&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install libjpeg libjpeg-dev libfreetype6 libfreetype6-dev zlib1g-dev
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo ln -s /usr/lib/&lt;span class="sb"&gt;`&lt;/span&gt;uname -i&lt;span class="sb"&gt;`&lt;/span&gt;-linux-gnu/libfreetype.so /usr/lib/
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo ln -s /usr/lib/&lt;span class="sb"&gt;`&lt;/span&gt;uname -i&lt;span class="sb"&gt;`&lt;/span&gt;-linux-gnu/libjpeg.so /usr/lib/
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo ln -s /usr/lib/&lt;span class="sb"&gt;`&lt;/span&gt;uname -i&lt;span class="sb"&gt;`&lt;/span&gt;-linux-gnu/libz.so /usr/lib/
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="installing-lxml-in-python-debian-based"&gt;
+&lt;h2&gt;Installing lxml in Python (Debian  based).&lt;/h2&gt;
+&lt;p&gt;If you're getting the &lt;strong&gt;&amp;quot;fatal error: libxml/xmlversion.h: No such file or directory&amp;quot;&lt;/strong&gt; error, just install the following development files:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get install python-dev libxml2-dev libxslt1-dev
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="problems-with-matplotlib-and-freetype"&gt;
+&lt;h2&gt;Problems with 'matplotlib' and freetype.&lt;/h2&gt;
+&lt;p&gt;If you're having problems installing matplotlib in a Python virtualenv, and are getting the &lt;em&gt;'freetype missing'&lt;/em&gt; error, you sould install the development files for freetype, and (in most cases) rebuild the python dependencies for matplotlib.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get  -u install libfreetype6-dev
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get build-dep python-matplotlib
+&lt;/pre&gt;
+&lt;p&gt;After that, you can just use pip normally to install matplotlib&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pip install matplotlib
+&lt;/pre&gt;
+&lt;p&gt;PS. I know of cases where you have to update &lt;em&gt;python-virtualenv&lt;/em&gt; and &lt;em&gt;python-pip&lt;/em&gt; after you use build-dep. Just apt-get upgrade your installation.
+Today I learned about the 'pydoc' command from Python.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="problems-with-locale"&gt;
+&lt;h2&gt;Problems with locale&lt;/h2&gt;
+&lt;p&gt;In some machines I've found problems when setting locales from Python.  First check the results of running&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;locale
+&lt;/pre&gt;
+&lt;p&gt;In my case is:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;LANG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;es_VE.UTF-8
+&lt;span class="nv"&gt;LANGUAGE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;es_VE:es
+&lt;span class="nv"&gt;LC_CTYPE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_NUMERIC&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_TIME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_COLLATE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_MONETARY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_MESSAGES&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_PAPER&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_ADDRESS&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_TELEPHONE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_MEASUREMENT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_IDENTIFICATION&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;es_VE.UTF-8&amp;quot;&lt;/span&gt;
+&lt;span class="nv"&gt;LC_ALL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Then use:&lt;/p&gt;
+&lt;pre class="code py literal-block"&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;locale&lt;/span&gt;
+
+&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;locale&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;setlocale&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;locale&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;LC_ALL&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s"&gt;'es_VE.utf-8'&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="n"&gt;locale&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Error&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="k"&gt;raise&lt;/span&gt;
+&lt;/pre&gt;
+&lt;p&gt;Change es_VE.UTF-8 for yours.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="creating-postgresql-roles"&gt;
+&lt;h2&gt;Creating postgresql roles&lt;/h2&gt;
+&lt;p&gt;This one is not just for Debian based systems, but for PostgreSQL, giving privileges to a specific user in your Database Server is really simple:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+CREATE USER user_name WITH PASSWORD &lt;span class="s1"&gt;'userpasswd'&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+CREATE DATABASE new_database&lt;span class="p"&gt;;&lt;/span&gt;
+
+GRANT ALL PRIVILEGES ON DATABASE new_database to user_name&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="local-dependencies-for-scipy"&gt;
+&lt;h2&gt;Local dependencies for scipy&lt;/h2&gt;
+&lt;p&gt;Before you're able to build &lt;cite&gt;scipy&lt;/cite&gt; using &lt;cite&gt;pip install&lt;/cite&gt;, you'll need to have some dependencies installed.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get -u install libatlas-base-dev libatlas-dev liblapack-dev libblas-dev
+&lt;/pre&gt;
+&lt;p&gt;You'll also need a Fortran compiler installed.&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;sudo apt-get -u install gfortran
+&lt;/pre&gt;
+&lt;/div&gt;
+</summary><category term="debian"></category><category term="help"></category><category term="documentation"></category><category term="libraries"></category><category term="pil"></category><category term="libjpeg"></category><category term="locale"></category><category term="matplotlib"></category><category term="libxml"></category><category term="ubuntu"></category><category term="freetype"></category><category term="postgresql"></category><category term="database"></category><category term="scipy"></category></entry><entry><title>A Simple Django Project Layout</title><link href="http://www.jackboot7.com/simply-django-project-layout.html" rel="alternate"></link><updated>2014-12-12T13:30:00-05:30</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2012-03-12:simply-django-project-layout.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;UPDATE:&lt;/strong&gt; This article was originally written when Django version was 1.4. Since this article was published I made changes based on the new features of Django. You can see some of them in this repository: &lt;a class="reference external" href="https://github.com/jackboot7/django-project-template"&gt;https://github.com/jackboot7/django-project-template.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;This is short entry on how I organize my Django projects, in a way that will be easy to deploy to a production server. This is not meant to be a full tutorial on Django, but just to document the way I layout my Django applications. I consider this layout a work in progress, as each day I learn something new that I can integrate into my project's layout. Anyway, I hope someone else can find this entry useful.&lt;/p&gt;
+&lt;p&gt;For most of my small/pet/side projects, I use a simple server schema, working only with a local development machine and a production server, I know that is a good practice to use a staging server with the same setup as the production server, but for small projects I found this unnecessary.&lt;/p&gt;
+&lt;div class="section" id="project-layout"&gt;
+&lt;h2&gt;Project Layout&lt;/h2&gt;
+&lt;p&gt;First, let me show you the layout of most of my projects:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; - project_domain_name/
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - .gitignore &lt;span class="o"&gt;(&lt;/span&gt;.hgignore &lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - requirements.pip
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - env/                       &lt;span class="c"&gt;# Virtual enviroment.
+&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - var/
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - server_config/             &lt;span class="c"&gt;# Server configuration files.
+&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - nginx.conf
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - uwsgi.ini
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - server_logs/               &lt;span class="c"&gt;# Server logs.
+&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - errors.log
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - access.log
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - project_dir/               &lt;span class="c"&gt;# Django project. Most of the time I name it 'webapp'
+&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - apps/                    &lt;span class="c"&gt;# Application apps.
+&lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - templates/
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - static/
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - manage.py
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - urls.py
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - settings.py
+&lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; - local_settings.py
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="ignored-files"&gt;
+&lt;h2&gt;Ignored files&lt;/h2&gt;
+&lt;p&gt;Some of this files and dirs are meant to be ignored by the control version system.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;*local_settings.py*&lt;/strong&gt;, for every local development machine, there should be a local settings file, this is where you put all the local development settings such as database config, or additional apps such as south or django-extensions.&lt;/p&gt;
+&lt;p&gt;I use &lt;strong&gt;*env/*&lt;/strong&gt; as a directory to install the virtual enviroment, in case you're using virtualenvwrapper you won't need to have this in your project directory.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;*var/*&lt;/strong&gt; is a place to put everything related to the project in runtime, such as sqlite database files, or generated files from compass or coffeescript. Just like the local settings, this directory its supposed to be different for every local development machine.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="settings-and-local-settings"&gt;
+&lt;h2&gt;Settings and Local Settings&lt;/h2&gt;
+&lt;p&gt;As you can see, I use two separate settings files, that way I can keep my production settings on my version control repository, and do daily work with the local settings of my development machine.&lt;/p&gt;
+&lt;p&gt;At the end of the settings.py file I import the local_settings module, in which I overwrite or add any specific setting that differ from the production one.&lt;/p&gt;
+&lt;!-- code::python
+
+try:
+    from local_settings import *
+except ImportError:
+        pass --&gt;
+&lt;p&gt;This way the deployment process is easier from the application's setup point of view.&lt;/p&gt;
+&lt;div class="section" id="paths"&gt;
+&lt;h3&gt;Paths&lt;/h3&gt;
+&lt;p&gt;The paths on my settings' file are defined using the os module. Even if this isn't the standard way to define paths, I find this useful as it makes easier to work with a project in different machines (local and production, more than one developer on the same project).&lt;/p&gt;
+&lt;!-- code::python
+
+import os
+
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+PROJECT_DIR = os.path.split(SITE_ROOT)[0]
+VAR_ROOT = os.path.join(PROJECT_DIR, 'var')
+
+if not os.path.exists(VAR_ROOT):
+    os.mkdir(VAR_ROOT) --&gt;
+&lt;p&gt;If we add this on the top of the setting file, we can later use these names to define standard variables such as &lt;strong&gt;*TEMPLATE_DIRS*&lt;/strong&gt; or &lt;strong&gt;*STATICFILES_DIR*&lt;/strong&gt;, like this:&lt;/p&gt;
+&lt;!-- code::python
+
+STATICFILES_DIRS = (os.path.join(SITE_ROOT, 'static'),)
+TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'),) --&gt;
+&lt;p&gt;And so on with every absolute path that I have to define in my settings file.&lt;/p&gt;
+&lt;p&gt;This is a very simple layout for Django projects, but I've found that as simple as it is, it's still very powerful. In my github you can find a sample of this layout, feel free to fork it and improve it!&lt;/p&gt;
+&lt;p&gt;I always find interesting how other people have different standards and use different techniques to setup their own projects, that's why I really like to recommend Django Sites, which is a repository of django-based sites along with source code.&lt;/p&gt;
+&lt;p&gt;How do you layout your Django applications? Do you have any recommendation?&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="django"></category><category term="documentation"></category><category term="layout"></category><category term="projects"></category><category term="python"></category><category term="settings"></category><category term="simple"></category></entry><entry><title>Python Audio Tools</title><link href="http://www.jackboot7.com/python-audio-tools.html" rel="alternate"></link><updated>2014-12-12T13:30:00-05:30</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2012-02-15:python-audio-tools.html</id><summary type="html">&lt;p&gt;Some days ago, I started to work on a web application that requires to encode audio wave files (.wav) into three other formats, being: MP3, Flac and M4A. That encoding will run in its own Celery task.&lt;/p&gt;
+&lt;p&gt;One thing I knew for certain is that I wouldn't be running commands such as lame or flac directly.&lt;/p&gt;
+&lt;p&gt;Since the project is being written in Python, I though it would be nice to use a library to do all the encoding directly in Python code, without calling any external program..&lt;/p&gt;
+&lt;p&gt;If you're going to write an audio related application in Python, I recommend a visit to the &lt;a class="reference external" href="http://wiki.python.org/moin/Audio"&gt;audio section&lt;/a&gt; in the Python wiki, where you can find all the audio related modules that are available for Python.&lt;/p&gt;
+&lt;p&gt;I decided to use the API from &lt;a class="reference external" href="http://audiotools.sourceforge.net/"&gt;Python Audio Tools&lt;/a&gt;, which is a very complete library to do audio manipulation. In the backend, it uses lame, flac and other commands to do the enconding of the files, but I won't have to run those commands directly.&lt;/p&gt;
+&lt;p&gt;So far, I'm very happy with the results I've got using audiotools, since it deals with metadata for the audio files (ID3v2 tagging, et al.) and it can even embed artwork into the files (if the format support such metadata).&lt;/p&gt;
+&lt;p&gt;I wrote a small Python script to show a basic use of this library, if you want, you can check it out on &lt;a class="reference external" href="https://github.com/jackboot7/python-audiotools-test"&gt;my githhub repo&lt;/a&gt;. I'll be adding a little more functionality to it as soon as I got some free time.&lt;/p&gt;
+</summary><category term="api"></category><category term="audio"></category><category term="audiotools"></category><category term="code"></category><category term="conversion"></category><category term="convert"></category><category term="encoding"></category><category term="example"></category><category term="flac"></category><category term="lame"></category><category term="m4a"></category><category term="mp3"></category><category term="programming"></category><category term="python"></category></entry><entry><title>(Local) Online Python Documentation</title><link href="http://www.jackboot7.com/pydoc.html" rel="alternate"></link><updated>2015-12-09T11:12:00-05:30</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2010-10-15:pydoc.html</id><summary type="html">&lt;p&gt;Today I learned about the &lt;cite&gt;pydoc&lt;/cite&gt; command from Python. Even if you're offline you can access the standard library documentation running from a local copy using the command mentioned above.&lt;/p&gt;
+&lt;p&gt;Simply introduce this command in your terminal:&lt;/p&gt;
+&lt;pre class="code bash literal-block"&gt;
+&lt;span class="nv"&gt;$ &lt;/span&gt;pydoc -p 8000
+&lt;/pre&gt;
+&lt;p&gt;Then you can go to &lt;a class="reference external" href="http://localhost:8000"&gt;http://locahost:8000&lt;/a&gt;. This way you can browse the documentation for all your installed Python modules in the same way you'd use the 'help' command from the Python CLI.&lt;/p&gt;
+&lt;p&gt;[1] &lt;a class="reference external" href="http://docs.python.org/library/pydoc.html"&gt;http://docs.python.org/library/pydoc.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;[2] &lt;a class="reference external" href="http://pydoc.org/"&gt;http://pydoc.org/&lt;/a&gt;&lt;/p&gt;
+</summary><category term="python"></category><category term="help"></category><category term="documentation"></category></entry></feed>
