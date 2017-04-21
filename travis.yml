@@ -1,0 +1,27 @@
+language: python
+
+branches:
+    only:
+        - source
+
+python:
+- 2.7
+
+cache:
+    directories:
+        - $HOME/.cache/pip
+
+
+install:
+- pip install -r requirements.pip
+
+before_script:
+- pelican-themes - ./theme/clean-blog
+
+script:
+- make publish github
+
+notifications:
+    email:
+        on_success: always
+        on_failure: always
