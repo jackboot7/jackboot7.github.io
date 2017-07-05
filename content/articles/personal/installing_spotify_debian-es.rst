@@ -56,6 +56,7 @@ Luego, sólo tendrás que instalarlo con apt e intentar instalar Spotity:
 
 Deberías poder usar Spotify en tu Debian 9.0 siguiendo estos pasos!
 
+(Si tienes una cuenta *Premium*, puedes usar Spotify en aplicaciones de terceros como Clementine en KDE)
 
 Fuentes:
 --------

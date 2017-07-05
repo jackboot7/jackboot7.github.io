@@ -54,6 +54,7 @@ Then just install it with apt and try re-installing Spotify:
 
 You should be able to use Spotify in your Debian 9.0 following these steps!
 
+**(If you have a premium account, you can use Spotify inside of third party clients such as Clementine in KDE)**
 
 Sources:
 ---------
