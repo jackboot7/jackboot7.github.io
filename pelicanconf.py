@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Luis Alberto Santana'
 AUTHOR_TAGLINE = u"Computer Scientist / Programmer."
-GRAVATAR_PERMALINK = "http://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150"
+GRAVATAR_PERMALINK = "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150"
 
 SITENAME = u'Luis Alberto Santana'
 #SITEURL = 'www.jackboot7.com'
@@ -47,10 +47,10 @@ SOCIAL = (
     ('Github', 'https://github.com/jackboot7'),
     ('Twitter', 'https://twitter.com/jackboot7'),
     ('Linkedin', 'https://www.linkedin.com/in/lsantanaf'),
-    ('StackOverflow', 'http://stackoverflow.com/users/1170195/luis-alberto-santana'),
-    ('Last.fm', 'http://last.fm/user/jackboot7'),
+    ('StackOverflow', 'https://stackoverflow.com/users/1170195/luis-alberto-santana'),
+    ('Last.fm', 'https://last.fm/user/jackboot7'),
     ('Delicious', 'https://delicious.com/jackboot7'),
-    ('Carers SO', 'http://careers.stackoverflow.com/jackboot7'),
+    ('Carers SO', 'https://careers.stackoverflow.com/jackboot7'),
 )
 
 
@@ -79,8 +79,8 @@ PYGMENTS_RST_OPTIONS = {'classprefix': 'pgcss', 'linenos': 'table'}
 #  Settings for Pelican Clean Blog
 # ====================================
 
-GITHUB_URL = 'http://github.com/jackboot7'
-TWITTER_URL = 'http://twitter.com/jackboot7'
+GITHUB_URL = 'https://github.com/jackboot7'
+TWITTER_URL = 'https://twitter.com/jackboot7'
 FACEBOOK_URL = '#'
 
 COLOR_SCHEME_CSS = 'monokai.css'
