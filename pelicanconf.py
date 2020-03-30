@@ -37,7 +37,8 @@ SUMMARY_MAX_LENGTH = 400
 THEME = 'clean-blog'
 
 # Enlaces
-# LINKS = (('Pelican', 'http://getpelican.com/'),
+LINKS =  (
+    ('Engineering Management Resources', 'https://www.jackboot7.com/engineering-management/'),)
 #         ('Python.org', 'http://python.org/'),
 #         ('Jinja2', 'http://jinja.pocoo.org/'),
 #         ('You can modify those links in your config file', '#'),)
@@ -48,15 +49,13 @@ SOCIAL = (
     ('Twitter', 'https://twitter.com/jackboot7'),
     ('Linkedin', 'https://www.linkedin.com/in/lsantanaf'),
     ('StackOverflow', 'https://stackoverflow.com/users/1170195/luis-alberto-santana'),
-    ('Last.fm', 'https://last.fm/user/jackboot7'),
-    ('Delicious', 'https://delicious.com/jackboot7'),
     ('Carers SO', 'https://careers.stackoverflow.com/jackboot7'),
 )
 
 
 DEFAULT_PAGINATION = 15
 STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': './CNAME'}, } 
+EXTRA_PATH_METADATA = {'extra/CNAME': {'path': './CNAME'}, }
 READERS = {"html": None}
 
 # Uncomment following line if you want document-relative URLs when developing
