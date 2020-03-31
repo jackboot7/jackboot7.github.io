@@ -17,7 +17,7 @@ SITENAME = u'Luis Alberto Santana'
 # SITEURL = 'https://www.jackboot7.com'
 
 BROWSER_COLOR = '#FFF'
-PYGMENTS_STYLE = 'paraiso-dark'
+PYGMENTS_STYLE = 'solarized-light'
 
 PATH = 'content'
 
