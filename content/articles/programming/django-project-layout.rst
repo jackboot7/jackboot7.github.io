@@ -18,7 +18,7 @@ Project Layout
 
 First, let me show you the layout of most of my projects:
 
-.. code:: bash
+.. code-block:: bash
 
     | - project_domain_name/
     | | - .gitignore (.hgignore )
@@ -61,7 +61,7 @@ As you can see, I use two separate settings files, that way I can keep my produc
 
 At the end of the settings.py file I import the local_settings module, in which I overwrite or add any specific setting that differ from the production one.
 
-.. code::python
+.. code-block:: python
     
     try:
         from local_settings import *
@@ -75,7 +75,7 @@ Paths
 The paths on my settings' file are defined using the os module. Even if this isn't the standard way to define paths, I find this useful as it makes easier to work with a project in different machines (local and production, more than one developer on the same project).
 
 
-.. code::python
+.. code-block:: python
     
     import os
     
@@ -88,7 +88,7 @@ The paths on my settings' file are defined using the os module. Even if this isn
 
 If we add this on the top of the setting file, we can later use these names to define standard variables such as ***TEMPLATE_DIRS*** or ***STATICFILES_DIR***, like this:
 
-.. code::python
+.. code-block:: python
     
     STATICFILES_DIRS = (os.path.join(SITE_ROOT, 'static'),)
     TEMPLATE_DIRS = (os.path.join(SITE_ROOT, 'templates'),)

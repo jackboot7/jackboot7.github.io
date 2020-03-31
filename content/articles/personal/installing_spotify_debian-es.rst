@@ -12,13 +12,13 @@ Una guía rápida de los pasos que tomé para instalar la *versión 1.0 de Spoti
 
 En una instalación limpia de Debian, será necesario tener instalado *dirmngr* antes de poder agregar los repositorios de Soptify a tus repositorios *apt*:
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt install dirmngr
 
 Luego de la instalación de *dirmngr*, es necesario agregar las claves y repositorios de Spotify (siguiendo los pasos de la página de instalación de `Spotify para Linux`):
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
     $ echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
@@ -26,14 +26,14 @@ Luego de la instalación de *dirmngr*, es necesario agregar las claves y reposit
 
 Si sigues las instrucciones en el website de Spotify, la instalación debería terminar con los comandos de *update* e *install* de apt:
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt update && sudo apt install spotify-client
 
 
 Pero es común que no todas las dependencias estén al día entre Spotify y Debian, entonces habrá que agregarlas "a mano".
 
-.. code:: bash
+.. code-block:: bash
 
 	The following packages have unmet dependencies:
 	 spotify-client : Depends: libssl1.0.0 but it is not installable
@@ -47,7 +47,7 @@ En primer lugar, deberás descargar la versión exacta del paquete que Spotify n
 
 Luego, sólo tendrás que instalarlo con apt e intentar instalar Spotity:
 
-.. code:: bash
+.. code-block:: bash
 
     $ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb
     $ sudo apt install ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb  # This can be replaced with sudo dpkg -i ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb

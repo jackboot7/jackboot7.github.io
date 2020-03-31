@@ -12,7 +12,7 @@ Hoy aprendí sobre el comando `pydoc` de Python. Incluso estando fuera de línea
 
 Para usarlo, simplemente debes ejecutar el comando en tu terminal:
 
-.. code:: bash
+.. code-block:: bash
     
     $ pydoc -p 8000
 

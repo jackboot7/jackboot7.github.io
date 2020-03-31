@@ -11,32 +11,32 @@ By default, Docker storage its files in the `/var/lib/docker` directory in the f
 
 As superuser, modify the systemd docker startup script. Edit the file `/lib/systemd/system/docker.service` replacing the `ExecStart` command:
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo vim /var/systemd/system/docker.service
 
 Change the line:
 
-.. code:: bash
+.. code-block:: bash
 
    ExecStart=/usr/bin/docker daemon -H fd://
 
 to
 
-.. code:: bash
+.. code-block:: bash
 
    ExecStart=/usr/bin/docker daemon -g /new/path -H fd://
 
 then stop the service, and be sure that the daemon is completely stopped:
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo systemctl stop docker
    $ ps -aux | grep -i docker
 
 The only output should be the one from `grep`. Then you can reload the system and -optionally- synchronize your current docker data to the new directory
 
-.. code:: bash
+.. code-block:: bash
 
    $ sudo systemctl daemon-reload
    $ sudo mkdir /new/path
@@ -44,7 +44,7 @@ The only output should be the one from `grep`. Then you can reload the system an
 
 Your docker installation should be running in the new data directory:
 
-.. code:: bash
+.. code-block:: bash
 
    $ ps -aux | grep -i docker
 

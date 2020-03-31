@@ -23,7 +23,7 @@ Para obtener los datos, utilicé `Twython`_, una biblioteca con la que ya tenía
 Una vez que se han configurado las claves de `API` y `OAUTH` siguiendo la `documentación de Twython`_, el próximo paso es obtener los datos que se originan en cierta ubicación, pasándole las coordenadas de la ubicación al API de streaming. Twitter usa un conjunto de límites para delimintar la ubicación de un tweet, sólo envía tweets dentro de esos límites.
 
 
-.. code:: python
+.. code-block:: python
 
     import json, os
     from twython import TwythonStreamer
@@ -77,7 +77,7 @@ El código usado para generar el mapa, una vez se cargaron los datos en una list
 - Escribir el archivo HTML.
 
 
-.. code:: python
+.. code-block:: python
     
     import folium
     from folium import plugins
@@ -104,7 +104,7 @@ I thought that a calendar type chart, such as the one that shows the contributio
 To achieve this, I decided to use `matplotlib`_ as the plotting library, insted of using a Javascript based library such as `D3.js`.
 
 
-.. code:: python
+.. code-block:: python
     
     import matplotlib
     import matplotlib.pyplot as plt

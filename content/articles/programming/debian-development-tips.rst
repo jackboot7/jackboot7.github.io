@@ -13,7 +13,7 @@ These are some extra steps that I've found necessary when starting development i
 Jpeg support in PIL and pillow.
 +++++++++++++++++++++++++++++++
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt-get install libjpeg libjpeg-dev libfreetype6 libfreetype6-dev zlib1g-dev
     $ sudo ln -s /usr/lib/`uname -i`-linux-gnu/libfreetype.so /usr/lib/
@@ -26,7 +26,7 @@ Installing lxml in Python (Debian  based).
 
 If you're getting the **"fatal error: libxml/xmlversion.h: No such file or directory"** error, just install the following development files:
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt-get install python-dev libxml2-dev libxslt1-dev 
 
@@ -36,14 +36,14 @@ Problems with 'matplotlib' and freetype.
 
 If you're having problems installing matplotlib in a Python virtualenv, and are getting the *'freetype missing'* error, you sould install the development files for freetype, and (in most cases) rebuild the python dependencies for matplotlib.
 
-.. code:: bash
+.. code-block:: bash
     
     $ sudo apt-get  -u install libfreetype6-dev
     $ sudo apt-get build-dep python-matplotlib
 
 After that, you can just use pip normally to install matplotlib
 
-.. code:: bash
+.. code-block:: bash
     
     $ pip install matplotlib
 
@@ -56,13 +56,13 @@ Problems with locale
 
 In some machines I've found problems when setting locales from Python.  First check the results of running 
 
-.. code:: bash
+.. code-block:: bash
 
     $ locale
 
 In my case is:
 
-.. code:: bash
+.. code-block:: bash
 
     LANG=es_VE.UTF-8
     LANGUAGE=es_VE:es
@@ -83,7 +83,7 @@ In my case is:
 
 Then use:
 
-.. code:: py
+.. code-block:: py
     
     import locale
 
@@ -101,7 +101,7 @@ Creating postgresql roles
 
 This one is not just for Debian based systems, but for PostgreSQL, giving privileges to a specific user in your Database Server is really simple:
 
-.. code:: bash
+.. code-block:: bash
     
     CREATE USER user_name WITH PASSWORD 'userpasswd';
     
@@ -116,12 +116,12 @@ Local dependencies for scipy
 Before you're able to build `scipy` using `pip install`, you'll need to have some dependencies installed.
 
 
-.. code:: bash
+.. code-block:: bash
     
     $ sudo apt-get -u install libatlas-base-dev libatlas-dev liblapack-dev libblas-dev
 
 You'll also need a Fortran compiler installed.
 
-.. code:: bash
+.. code-block:: bash
     
     $ sudo apt-get -u install gfortran

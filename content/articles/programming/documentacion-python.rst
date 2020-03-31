@@ -14,7 +14,7 @@ Simply introduce this command in your terminal:
 
 
 
-.. code:: bash
+.. code-block:: bash
     
     $ pydoc -p 8000
 

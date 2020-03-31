@@ -22,7 +22,7 @@ To fetch the data, I used the `Twython`_ library since I've worked with it befor
 Once the `API` and `OAUTH` keys are correctly following `Twython's documentation`_, the next step is to fetch the data originating in certain location, passing it as a parameter to the streaming API. Twitter uses a set of bounding boxes to track the location of a tweet and only geolocated Tweets falling within the requested bounding boxes will be included.
 
 
-.. code:: python
+.. code-block:: python
 
     import json, os
     from twython import TwythonStreamer
@@ -76,7 +76,7 @@ The code used to generate the heatmap, once I've read the text file into a list 
 - Writing the html file.
 
 
-.. code:: python
+.. code-block:: python
     
     import folium
     from folium import plugins
@@ -103,7 +103,7 @@ I thought that a calendar type chart, such as the one that shows the contributio
 To achieve this, I decided to use `matplotlib`_ as the plotting library, insted of using a Javascript based library such as `D3.js`.
 
 
-.. code:: python
+.. code-block:: python
     
     import matplotlib
     import matplotlib.pyplot as plt

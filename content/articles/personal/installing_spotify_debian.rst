@@ -11,27 +11,27 @@ A quick guide of the steps I took to install *Spotify version 1.0* in Debian 9.0
 
 With a fresh install of Debian, you'll need *dirmngr* installed before adding the Spotify repository to your *apt* list:
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt install dirmngr
 
 After *dirmngr* installation, you'll need to add the Spotify keys and repositories (just check the instructions in the `Spotify for Linux`_ website):
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
     $ echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list
 
 If you follow the instructions at Spotify's website, the installation should be ready with the update and install commands from apt:
 
-.. code:: bash
+.. code-block:: bash
 
     $ sudo apt update && sudo apt install spotify-client
 
 
 But is a common case that not all the dependencies are up to date between Spotify and Debian, so you'll need to add them "by hand".
 
-.. code:: bash
+.. code-block:: bash
 
 	The following packages have unmet dependencies:
 	 spotify-client : Depends: libssl1.0.0 but it is not installable
@@ -45,7 +45,7 @@ First you'll have to download the exact same version of the package that Spotify
 
 Then just install it with apt and try re-installing Spotify:
 
-.. code:: bash
+.. code-block:: bash
 
     $ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb
     $ sudo apt install ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb  # This can be replaced with sudo dpkg -i ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb
