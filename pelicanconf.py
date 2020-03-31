@@ -1,14 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
+from datetime import datetime
 
 
 AUTHOR = u'Luis Alberto Santana'
 AUTHOR_TAGLINE = u"Computer Scientist / Programmer."
+SITELOGO = "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150" 
 GRAVATAR_PERMALINK = "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150"
 
+ROBOTS = 'index, follow'
+
+COPYRIGHT_YEAR = datetime.now().year
+
 SITENAME = u'Luis Alberto Santana'
-#SITEURL = 'www.jackboot7.com'
+# SITEURL = 'https://www.jackboot7.com'
+
+BROWSER_COLOR = '#FFF'
+PYGMENTS_STYLE = 'paraiso-dark'
 
 PATH = 'content'
 
@@ -21,9 +30,10 @@ DEFAULT_DATE_FORMAT = '%A, %b %d, %Y'
 
 
 # Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
+FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = None
 TRANSLATION_FEED_ATOM = None
+
 
 # Do not display the categories in the top bar
 DISPLAY_CATEGORIES_ON_MENU = False
@@ -31,29 +41,34 @@ DISPLAY_CATEGORIES_ON_MENU = False
 SITESUBTITLE = '@jackboot7'
 
 
-SUMMARY_MAX_LENGTH = 400
+SUMMARY_MAX_LENGTH = 300
 
 # Theme
-THEME = 'clean-blog'
+THEME = 'Flex'
+
+# Menu
+MAIN_MENU = True
 
 # Enlaces
 LINKS =  (
-    ('Engineering Management Resources', 'https://www.jackboot7.com/engineering-management/'),)
-#         ('Python.org', 'http://python.org/'),
-#         ('Jinja2', 'http://jinja.pocoo.org/'),
-#         ('You can modify those links in your config file', '#'),)
+    ('Engineering Management Resources', 'https://www.jackboot7.com/engineering-management/'),
+)
 
 # Social widget
 SOCIAL = (
-    ('Github', 'https://github.com/jackboot7'),
-    ('Twitter', 'https://twitter.com/jackboot7'),
-    ('Linkedin', 'https://www.linkedin.com/in/lsantanaf'),
-    ('StackOverflow', 'https://stackoverflow.com/users/1170195/luis-alberto-santana'),
-    ('Carers SO', 'https://careers.stackoverflow.com/jackboot7'),
+    ('github', 'https://github.com/jackboot7'),
+    ('twitter', 'https://twitter.com/jackboot7'),
+    ('linkedin', 'https://www.linkedin.com/in/lsantanaf'),
+    ('stack-overflow', 'https://stackoverflow.com/users/1170195/luis-alberto-santana'),
+    ('rss', 'feeds/all.atom.xml'),
 )
 
+# MENUITEMS = (
+#     ('Tags', '/tags.html'),
+#     ('Archive', '/archives.html'),
+# )
 
-DEFAULT_PAGINATION = 15
+DEFAULT_PAGINATION = 5
 STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': './CNAME'}, }
 READERS = {"html": None}
@@ -72,14 +87,3 @@ TWITTER_USERNAME = 'jackboot7'
 
 # Line numbers in every code block
 PYGMENTS_RST_OPTIONS = {'classprefix': 'pgcss', 'linenos': 'table'}
-
-
-# ====================================
-#  Settings for Pelican Clean Blog
-# ====================================
-
-GITHUB_URL = 'https://github.com/jackboot7'
-TWITTER_URL = 'https://twitter.com/jackboot7'
-FACEBOOK_URL = '#'
-
-COLOR_SCHEME_CSS = 'monokai.css'
