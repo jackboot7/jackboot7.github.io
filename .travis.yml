@@ -3,14 +3,17 @@ branches:
     only:
         - source
 python:
-    - 2.7
+    - 3.7
 cache:
     directories:
         - $HOME/.cache/pip
+
 # Installs dependencies
 install: pip install -r requirements.pip
+
 # Installs the theme
-before_script: pelican-themes -i ./theme/clean-blog
+before_script: pelican-themes -i ./theme/Flex
+
 # Uses Makefile for publication
 script: make publish github
 notifications:
