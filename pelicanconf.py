@@ -21,6 +21,15 @@ PYGMENTS_STYLE = 'solarized-light'
 
 PATH = 'content'
 
+STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014', 'custom.css']
+
+EXTRA_PATH_METADATA = {
+     'extra/custom.css': {'path': './custom.css'},
+     'extra/CNAME': {'path': './CNAME'},
+    }
+
+CUSTOM_CSS = 'extra/custom.css'
+
 TIMEZONE = 'America/Caracas'
 
 # Date Format and Locale
@@ -69,8 +78,7 @@ SOCIAL = (
 # )
 
 DEFAULT_PAGINATION = 5
-STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': './CNAME'}, }
+
 READERS = {"html": None}
 
 # Uncomment following line if you want document-relative URLs when developing
