@@ -21,10 +21,10 @@ PYGMENTS_STYLE = 'solarized-light'
 
 PATH = 'content'
 
-STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014', 'custom.css']
+STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014',]
 
 EXTRA_PATH_METADATA = {
-     'extra/custom.css': {'path': './custom.css'},
+     'extra/custom.css': {'path': 'extra/custom.css'},
      'extra/CNAME': {'path': './CNAME'},
     }
 
