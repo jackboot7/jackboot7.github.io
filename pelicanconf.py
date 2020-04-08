@@ -6,7 +6,7 @@ from datetime import datetime
 
 AUTHOR = u'Luis Alberto Santana'
 AUTHOR_TAGLINE = u"Computer Scientist / Programmer."
-SITELOGO = "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150" 
+SITELOGO = "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150"
 GRAVATAR_PERMALINK = "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150"
 
 ROBOTS = 'index, follow'
@@ -21,7 +21,7 @@ PYGMENTS_STYLE = 'solarized-light'
 
 PATH = 'content'
 
-STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014',]
+STATIC_PATHS = ['images', 'files', 'extra/CNAME', 'birthday2014', 'extra/custom.css']
 
 EXTRA_PATH_METADATA = {
      'extra/custom.css': {'path': 'extra/custom.css'},
