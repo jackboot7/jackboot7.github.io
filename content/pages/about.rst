@@ -20,6 +20,8 @@ etc.
 
 Currently I work as an engineering manager at `Credijusto`_ leading the Financial Core and Growth teams, and maintain a list of `engineering management resources`_ that I've found useful in my career.
 
+In the past, I've done software engineering consulting.
+
 
 Feel free to reach out.
 
