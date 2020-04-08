@@ -18,7 +18,12 @@ My language of choice is `Python`_, but I feel comfortable working with differen
 etc.
 
 
+Currently I work as an engineering manager at `Credijusto`_ leading the Financial Core and Growth teams, and maintain a list of `engineering management resources`_ that I've found useful in my career.
+
+
 Feel free to reach out.
 
 
 .. _`Python`: https://www.python.org/
+.. _`Credijusto`: https://credijusto.com/
+.. _`engineering management resources`: https://www.jackboot7.com/engineering-management/
