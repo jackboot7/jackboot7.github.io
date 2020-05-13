@@ -46,9 +46,10 @@ Let's start:
 6. **What's the compensation package/salary range**: Let's face it, money is important, people want to know if it is worth it to do a selection process and to invest time in interviews. If you're aware that your compensation package is lower than others, I'm sure the company would have a way to balance that. Don't be obscure with salary ranges.
 
 
-I hope these bullet points are useful for recruiters and sources.  We could resume all these tips with a simple one **Respect everybody's time**.
+We could resume all these tips with a simple one **Respect everybody's time**.
 
 Is there any other tip you think is important? Let me know in the comments!
+
 Thanks `Chris`_ for taking your time proofreading this article.
 
 
