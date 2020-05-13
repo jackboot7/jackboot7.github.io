@@ -25,7 +25,7 @@ Let's start:
 
 2. **Mention the company you're recruiting for**: This might sound silly, but unless it is obvious who your employer is, it is important to mention the company that you're recruiting for. People usually want to research the company online. If you "don't reveal" the company you're recruiting for, it looks shady and for most of us that's an automated "no follow".
 
-*What about the phone screen?* The phone screen comes in *after* the candidate is interested in "knowing more" about the position or project, not before. I have received tens of messages from recruiters that demand my phone number before they give me any information about the position they want to fill. If you want to do a quick phone screen, mention it as part of the general information about the position you give in your first contact.
+    2.1. *What about the phone screen?* The phone screen comes in *after* the candidate is interested in "knowing more" about the position or project, not before. I have received tens of messages from recruiters that demand my phone number before they give me any information about the position they want to fill. If you want to do a quick phone screen, mention it as part of the general information about the position you give in your first contact.
 
 
 3. **Understand the position you're trying to fill**: It is a common mistake to ask candidates for +5 years experience in technologies that have existed only for two years or to confuse Java with Javascript. You must understand the position so you can ask the right questions and don't seem clueless to candidates. The more you understand the position, the more questions you can answer... which takes me to the next point.
