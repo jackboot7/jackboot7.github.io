@@ -1,11 +1,10 @@
 Recruiting Tips for Recruiters
 ==============================
 
-:date: 2020-05-15 09:30
+:date: 2020-05-13 19:30
 :slug: recruiters-tips-recruiters
-:tags: personal, software, engineering, recruiting, tips
+:tags: personal, software, engineering, recruiting, tips, hiring, management, sourcing
 :lang: en
-:status: draft
 
 
 Since I started my professional life, several years ago, I've dealt with technical recruiters, that's great, right? I'm able to improve my quality of life, grow in a career path, and pursue interesting projects.
