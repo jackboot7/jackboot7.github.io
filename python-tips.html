@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/stylesheet/style.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/pygments/solarized-light.min.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/solid.css">
+
+    <link href="https://www.jackboot7.com/extra/custom.css" rel="stylesheet">
+
+    <link href="https://www.jackboot7.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Luis Alberto Santana Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43616963-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#FFF">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#FFF">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#FFF">
+
+<meta name="author" content="Luis Alberto Santana" />
+<meta name="description" content="A collection of small Python scripts and tips. This post is based on a Twitter thread I started in April 2020 and works as a centralized way to read all the tips in an easier format than Twitter&#39;s 280 characters. Both will be updated frequently. List Flatten without explicit loops Using Itertools&#39; chain 1 2 3 4 5 6import itertools test = [[-1, -2], [30, 40], [25, 35]] list(itertools.chain.from_iterable(test)) &gt;&gt; [-1, -2, 30, 40, 25, 35] Using map and strings (Suggested by @Romestantc ) 1 2 3 4test = [[-1, -2], [30, 40], [25, 35]] map(int, &#39;&#39;.join(c for c in test.__str__() if c not in &#39;[]&#39;).split(&#39;,&#39;) ) &gt;&gt; [-1, -2, 30, 40, 25, 35] Not pretty in my opinion ;) Count individual items of any iterable 1 2 3 4 5 6 7 8from collections import Counter count = Counter([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;d&#39;]) print(count) &gt;&gt; Counter({&#39;a&#39;: 3, &#39;b&#39;: 2, &#39;c&#39;: 1, &#39;d&#39;: 1}) count[&#39;a&#39;] &gt;&gt; 3 Repeat a series of values from any iterable 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17import itertools as it data = it.cycle([1, 2]) for i in range(10): print(next(data)) &gt;&gt; 1 2 1 2 1 2 1 2 1 2 Name slices to reuse them 1 2 3 4 5 6 7 8# slice(start, end, step) STEPTWO = slice(None, None, 2) integer_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] integer_list[STEPTWO] &gt;&gt; [0, 2, 4, 6, 8] This is the same as: 1integer_list[::2] Reverse any &#34;indexable&#34; collection that supports slices 1 2 3 4 5 6# slice(None, None, -1) or [::-1] integer_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] integer_list[::-1] &gt;&gt; [9, 8, 7, 6, 5 …" />
+<meta name="keywords" content="python, tips, lists, functools, itertools, timezone">
+
+
+<meta property="og:site_name" content="Luis Alberto Santana"/>
+<meta property="og:title" content="Python Tips"/>
+<meta property="og:description" content="A collection of small Python scripts and tips. This post is based on a Twitter thread I started in April 2020 and works as a centralized way to read all the tips in an easier format than Twitter&#39;s 280 characters. Both will be updated frequently. List Flatten without explicit loops Using Itertools&#39; chain 1 2 3 4 5 6import itertools test = [[-1, -2], [30, 40], [25, 35]] list(itertools.chain.from_iterable(test)) &gt;&gt; [-1, -2, 30, 40, 25, 35] Using map and strings (Suggested by @Romestantc ) 1 2 3 4test = [[-1, -2], [30, 40], [25, 35]] map(int, &#39;&#39;.join(c for c in test.__str__() if c not in &#39;[]&#39;).split(&#39;,&#39;) ) &gt;&gt; [-1, -2, 30, 40, 25, 35] Not pretty in my opinion ;) Count individual items of any iterable 1 2 3 4 5 6 7 8from collections import Counter count = Counter([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;a&#39;, &#39;a&#39;, &#39;b&#39;, &#39;d&#39;]) print(count) &gt;&gt; Counter({&#39;a&#39;: 3, &#39;b&#39;: 2, &#39;c&#39;: 1, &#39;d&#39;: 1}) count[&#39;a&#39;] &gt;&gt; 3 Repeat a series of values from any iterable 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17import itertools as it data = it.cycle([1, 2]) for i in range(10): print(next(data)) &gt;&gt; 1 2 1 2 1 2 1 2 1 2 Name slices to reuse them 1 2 3 4 5 6 7 8# slice(start, end, step) STEPTWO = slice(None, None, 2) integer_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] integer_list[STEPTWO] &gt;&gt; [0, 2, 4, 6, 8] This is the same as: 1integer_list[::2] Reverse any &#34;indexable&#34; collection that supports slices 1 2 3 4 5 6# slice(None, None, -1) or [::-1] integer_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] integer_list[::-1] &gt;&gt; [9, 8, 7, 6, 5 …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://www.jackboot7.com/python-tips.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2020-07-01 15:00:00-04:00"/>
+<meta property="article:modified_time" content="2020-07-01 15:00:00-04:00"/>
+<meta property="article:author" content="https://www.jackboot7.com/author/luis-alberto-santana.html">
+<meta property="article:section" content="programming"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="tips"/>
+<meta property="article:tag" content="lists"/>
+<meta property="article:tag" content="functools"/>
+<meta property="article:tag" content="itertools"/>
+<meta property="article:tag" content="timezone"/>
+<meta property="og:image" content="https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150">
+
+  <title>Luis Alberto Santana &ndash; Python Tips</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://www.jackboot7.com">
+        <img src="https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150" alt="" title="">
+      </a>
+      <h1><a href="https://www.jackboot7.com"></a></h1>
+
+<p>@jackboot7</p>      <nav>
+        <ul class="list">
+
+            <li><a target="_blank" href="https://www.jackboot7.com/pages/about-me.html#about-me">About me</a></li>
+
+            <li><a target="_blank" href="https://www.jackboot7.com/engineering-management/" >Engineering Management Resources</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/jackboot7" target="_blank">
+            <i class="fab fa-github">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/jackboot7" target="_blank">
+            <i class="fab fa-twitter">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/lsantanaf" target="_blank">
+            <i class="fab fa-linkedin">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-stack-overflow" href="https://stackoverflow.com/users/1170195/luis-alberto-santana" target="_blank">
+            <i class="fab fa-stack-overflow">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-rss" href="feeds/all.atom.xml" target="_blank">
+            <i class="fas fa-rss">
+            </i>
+          </a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://www.jackboot7.com">    Home
+</a>
+
+
+      <a href="https://www.jackboot7.com/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="python-tips">Python Tips</h1>
+    <p>
+          Posted on Wednesday, Jul 01, 2020 in <a href="https://www.jackboot7.com/category/programming.html">programming</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <div class="section" id="a-collection-of-small-python-scripts-and-tips">
+<h2>A collection of small Python scripts and tips.</h2>
+<p>This post is based on a <a class="reference external" href="https://twitter.com/jackboot7/status/1243321600507654144">Twitter thread</a> I started in April 2020 and works as a centralized way
+to read all the tips in an easier format than Twitter's 280 characters.</p>
+<p>Both will be updated frequently.</p>
+<div class="section" id="list-flatten-without-explicit-loops">
+<h3>List Flatten without explicit loops</h3>
+<ul class="simple">
+<li>Using Itertools' chain</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">import</span> <span class="pgcssnn">itertools</span>
+
+<span class="pgcssn">test</span> <span class="pgcsso">=</span> <span class="pgcssp">[[</span><span class="pgcsso">-</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">2</span><span class="pgcssp">],</span> <span class="pgcssp">[</span><span class="pgcssmi">30</span><span class="pgcssp">,</span> <span class="pgcssmi">40</span><span class="pgcssp">],</span> <span class="pgcssp">[</span><span class="pgcssmi">25</span><span class="pgcssp">,</span> <span class="pgcssmi">35</span><span class="pgcssp">]]</span>
+<span class="pgcssnb">list</span><span class="pgcssp">(</span><span class="pgcssn">itertools</span><span class="pgcsso">.</span><span class="pgcssn">chain</span><span class="pgcsso">.</span><span class="pgcssn">from_iterable</span><span class="pgcssp">(</span><span class="pgcssn">test</span><span class="pgcssp">))</span>
+
+<span class="pgcsso">&gt;&gt;</span>  <span class="pgcssp">[</span><span class="pgcsso">-</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">30</span><span class="pgcssp">,</span> <span class="pgcssmi">40</span><span class="pgcssp">,</span> <span class="pgcssmi">25</span><span class="pgcssp">,</span> <span class="pgcssmi">35</span><span class="pgcssp">]</span>
+</pre></div>
+</td></tr></table><ul class="simple">
+<li>Using <strong>map</strong> and strings (Suggested by <a class="reference external" href="https://twitter.com/Romestantc/status/1243655980203659265">&#64;Romestantc</a> )</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssn">test</span> <span class="pgcsso">=</span>  <span class="pgcssp">[[</span><span class="pgcsso">-</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">2</span><span class="pgcssp">],</span> <span class="pgcssp">[</span><span class="pgcssmi">30</span><span class="pgcssp">,</span> <span class="pgcssmi">40</span><span class="pgcssp">],</span> <span class="pgcssp">[</span><span class="pgcssmi">25</span><span class="pgcssp">,</span> <span class="pgcssmi">35</span><span class="pgcssp">]]</span>
+<span class="pgcssnb">map</span><span class="pgcssp">(</span><span class="pgcssnb">int</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;&#39;</span><span class="pgcsso">.</span><span class="pgcssn">join</span><span class="pgcssp">(</span><span class="pgcssn">c</span> <span class="pgcssk">for</span> <span class="pgcssn">c</span> <span class="pgcssow">in</span> <span class="pgcssn">test</span><span class="pgcsso">.</span><span class="pgcssfm">__str__</span><span class="pgcssp">()</span> <span class="pgcssk">if</span> <span class="pgcssn">c</span> <span class="pgcssow">not</span> <span class="pgcssow">in</span> <span class="pgcsss1">&#39;[]&#39;</span><span class="pgcssp">)</span><span class="pgcsso">.</span><span class="pgcssn">split</span><span class="pgcssp">(</span><span class="pgcsss1">&#39;,&#39;</span><span class="pgcssp">)</span> <span class="pgcssp">)</span>
+
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">[</span><span class="pgcsso">-</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">30</span><span class="pgcssp">,</span> <span class="pgcssmi">40</span><span class="pgcssp">,</span> <span class="pgcssmi">25</span><span class="pgcssp">,</span> <span class="pgcssmi">35</span><span class="pgcssp">]</span>
+</pre></div>
+</td></tr></table><p>Not pretty in my opinion ;)</p>
+</div>
+<div class="section" id="count-individual-items-of-any-iterable">
+<h3>Count  individual items of any iterable</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">collections</span> <span class="pgcsskn">import</span> <span class="pgcssn">Counter</span>
+<span class="pgcssn">count</span> <span class="pgcsso">=</span> <span class="pgcssn">Counter</span><span class="pgcssp">([</span><span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;c&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;d&#39;</span><span class="pgcssp">])</span>
+
+<span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssn">count</span><span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssn">Counter</span><span class="pgcssp">({</span><span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;c&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;d&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">1</span><span class="pgcssp">})</span>
+
+<span class="pgcssn">count</span><span class="pgcssp">[</span><span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">]</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssmi">3</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="repeat-a-series-of-values-from-any-iterable">
+<h3>Repeat a series of values from any iterable</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">import</span> <span class="pgcssnn">itertools</span> <span class="pgcssk">as</span> <span class="pgcssnn">it</span>
+
+<span class="pgcssn">data</span> <span class="pgcsso">=</span> <span class="pgcssn">it</span><span class="pgcsso">.</span><span class="pgcssn">cycle</span><span class="pgcssp">([</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">])</span>
+
+<span class="pgcssk">for</span> <span class="pgcssn">i</span> <span class="pgcssow">in</span> <span class="pgcssnb">range</span><span class="pgcssp">(</span><span class="pgcssmi">10</span><span class="pgcssp">):</span>
+    <span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssnb">next</span><span class="pgcssp">(</span><span class="pgcssn">data</span><span class="pgcssp">))</span>
+
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssmi">1</span>
+<span class="pgcssmi">2</span>
+<span class="pgcssmi">1</span>
+<span class="pgcssmi">2</span>
+<span class="pgcssmi">1</span>
+<span class="pgcssmi">2</span>
+<span class="pgcssmi">1</span>
+<span class="pgcssmi">2</span>
+<span class="pgcssmi">1</span>
+<span class="pgcssmi">2</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="name-slices-to-reuse-them">
+<h3>Name slices to reuse them</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssc1"># slice(start, end, step)</span>
+
+<span class="pgcssn">STEPTWO</span> <span class="pgcsso">=</span> <span class="pgcssnb">slice</span><span class="pgcssp">(</span><span class="pgcsskc">None</span><span class="pgcssp">,</span> <span class="pgcsskc">None</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">)</span>
+<span class="pgcssn">integer_list</span> <span class="pgcsso">=</span> <span class="pgcssp">[</span><span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">5</span><span class="pgcssp">,</span> <span class="pgcssmi">6</span><span class="pgcssp">,</span> <span class="pgcssmi">7</span><span class="pgcssp">,</span> <span class="pgcssmi">8</span><span class="pgcssp">,</span> <span class="pgcssmi">9</span><span class="pgcssp">]</span>
+
+<span class="pgcssn">integer_list</span><span class="pgcssp">[</span><span class="pgcssn">STEPTWO</span><span class="pgcssp">]</span>
+
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">[</span><span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">6</span><span class="pgcssp">,</span> <span class="pgcssmi">8</span><span class="pgcssp">]</span>
+</pre></div>
+</td></tr></table><p>This is the same as:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssn">integer_list</span><span class="pgcssp">[::</span><span class="pgcssmi">2</span><span class="pgcssp">]</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="reverse-any-indexable-collection-that-supports-slices">
+<h3>Reverse any &quot;indexable&quot; collection that supports slices</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssc1"># slice(None, None, -1) or [::-1]</span>
+
+<span class="pgcssn">integer_list</span> <span class="pgcsso">=</span> <span class="pgcssp">[</span><span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">5</span><span class="pgcssp">,</span> <span class="pgcssmi">6</span><span class="pgcssp">,</span> <span class="pgcssmi">7</span><span class="pgcssp">,</span> <span class="pgcssmi">8</span><span class="pgcssp">,</span> <span class="pgcssmi">9</span><span class="pgcssp">]</span>
+<span class="pgcssn">integer_list</span><span class="pgcssp">[::</span><span class="pgcsso">-</span><span class="pgcssmi">1</span><span class="pgcssp">]</span>
+
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">[</span><span class="pgcssmi">9</span><span class="pgcssp">,</span> <span class="pgcssmi">8</span><span class="pgcssp">,</span> <span class="pgcssmi">7</span><span class="pgcssp">,</span> <span class="pgcssmi">6</span><span class="pgcssp">,</span> <span class="pgcssmi">5</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">0</span><span class="pgcssp">]</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="use-array-to-keep-homogeneous-type-of-objects-in-your-lists">
+<h3>Use array to keep homogeneous type of objects in your lists</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">array</span> <span class="pgcsskn">import</span> <span class="pgcssn">array</span>
+
+<span class="pgcssn">integer_list</span> <span class="pgcsso">=</span> <span class="pgcssn">array</span><span class="pgcssp">(</span><span class="pgcsss1">&#39;i&#39;</span><span class="pgcssp">,</span> <span class="pgcssp">[</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">])</span>
+
+<span class="pgcssn">integer_list</span> <span class="pgcsso">=</span> <span class="pgcssn">array</span><span class="pgcssp">(</span><span class="pgcsss1">&#39;i&#39;</span><span class="pgcssp">,</span> <span class="pgcssp">[</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsss2">&quot;a&quot;</span><span class="pgcssp">])</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssne">TypeError</span><span class="pgcssp">:</span> <span class="pgcssn">an</span> <span class="pgcssn">integer</span> <span class="pgcssow">is</span> <span class="pgcssn">required</span> <span class="pgcssp">(</span><span class="pgcssn">got</span> <span class="pgcssnb">type</span> <span class="pgcssnb">str</span><span class="pgcssp">)</span>
+</pre></div>
+</td></tr></table><p>The constructor of array includes a type code parameter and an optional initial list.</p>
+</div>
+<div class="section" id="swap-dictionary-key-values-using-zip">
+<h3>Swap dictionary key-values using <cite>zip</cite></h3>
+<p>Using <strong>zip</strong>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssn">data</span> <span class="pgcsso">=</span> <span class="pgcssp">{</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;c&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;d&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">4</span> <span class="pgcssp">}</span>
+
+<span class="pgcssn">data</span><span class="pgcsso">.</span><span class="pgcssn">items</span><span class="pgcssp">()</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssn">dict_items</span><span class="pgcssp">([(</span><span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">1</span><span class="pgcssp">),</span> <span class="pgcssp">(</span><span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">),</span> <span class="pgcssp">(</span><span class="pgcsss1">&#39;c&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">),</span> <span class="pgcssp">(</span><span class="pgcsss1">&#39;d&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">)])</span>
+
+<span class="pgcssn">z</span> <span class="pgcsso">=</span> <span class="pgcssnb">zip</span><span class="pgcssp">(</span><span class="pgcssn">data</span><span class="pgcsso">.</span><span class="pgcssn">values</span><span class="pgcssp">(),</span> <span class="pgcssn">data</span><span class="pgcsso">.</span><span class="pgcssn">keys</span><span class="pgcssp">())</span>
+
+<span class="pgcssnb">dict</span><span class="pgcssp">(</span><span class="pgcssn">z</span><span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span>  <span class="pgcssp">{</span> <span class="pgcssmi">1</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;c&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;d&#39;</span> <span class="pgcssp">}</span>
+</pre></div>
+</td></tr></table><p>Using <strong>dictionary comprehensions</strong>:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssn">data</span> <span class="pgcsso">=</span> <span class="pgcssp">{</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;c&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;d&#39;</span><span class="pgcssp">:</span> <span class="pgcssmi">4</span> <span class="pgcssp">}</span>
+
+<span class="pgcssp">{</span> <span class="pgcssn">v</span><span class="pgcssp">:</span><span class="pgcssn">k</span> <span class="pgcssk">for</span> <span class="pgcssn">k</span><span class="pgcssp">,</span> <span class="pgcssn">v</span> <span class="pgcssow">in</span> <span class="pgcssn">data</span><span class="pgcsso">.</span><span class="pgcssn">items</span><span class="pgcssp">()</span> <span class="pgcssp">}</span>
+<span class="pgcsso">&gt;&gt;</span>  <span class="pgcssp">{</span> <span class="pgcssmi">1</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;b&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;c&#39;</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">:</span> <span class="pgcsss1">&#39;d&#39;</span> <span class="pgcssp">}</span>
+</pre></div>
+</td></tr></table><p>If there are repeated values, the result will be overwritten, so be careful.</p>
+</div>
+<div class="section" id="namedtuples-as-lightweight-inmutable-record-like-objects">
+<h3>Namedtuples as lightweight, inmutable, record-like objects</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">collections</span> <span class="pgcsskn">import</span> <span class="pgcssn">namedtuple</span>
+
+<span class="pgcssn">Person</span> <span class="pgcsso">=</span> <span class="pgcssn">namedtuple</span><span class="pgcssp">(</span><span class="pgcsss2">&quot;Person&quot;</span><span class="pgcssp">,</span> <span class="pgcsss2">&quot;name age gender&quot;</span><span class="pgcssp">)</span>
+<span class="pgcssn">bob</span> <span class="pgcsso">=</span> <span class="pgcssn">Person</span><span class="pgcssp">(</span><span class="pgcsss2">&quot;Bob&quot;</span><span class="pgcssp">,</span> <span class="pgcssmi">30</span><span class="pgcssp">,</span> <span class="pgcsss2">&quot;male&quot;</span><span class="pgcssp">)</span>
+
+<span class="pgcssn">bob</span><span class="pgcsso">.</span><span class="pgcssn">age</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssmi">30</span>
+
+<span class="pgcssn">bob</span><span class="pgcssp">[</span><span class="pgcssmi">1</span><span class="pgcssp">]</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssmi">30</span>
+</pre></div>
+</td></tr></table><p>Something similar can be achieved using Dataclasses (for Python 3.8+)</p>
+</div>
+<div class="section" id="built-ins-set-and-frozenset-for-unordered-collections-of-hashable-objects">
+<h3>Built-ins set and frozenset for unordered collections of hashable objects</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssn">A</span> <span class="pgcsso">=</span> <span class="pgcssnb">set</span><span class="pgcssp">([</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">])</span>
+<span class="pgcssn">B</span> <span class="pgcsso">=</span> <span class="pgcssnb">set</span><span class="pgcssp">([</span><span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">5</span><span class="pgcssp">])</span>
+
+<span class="pgcssn">A</span><span class="pgcsso">.</span><span class="pgcssn">union</span><span class="pgcssp">(</span><span class="pgcssn">B</span><span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">{</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">5</span><span class="pgcssp">}</span>
+
+<span class="pgcssn">A</span><span class="pgcsso">.</span><span class="pgcssn">intersection</span><span class="pgcssp">(</span><span class="pgcssn">B</span><span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">{</span><span class="pgcssmi">3</span><span class="pgcssp">}</span>
+
+<span class="pgcssn">A</span><span class="pgcsso">.</span><span class="pgcssn">symmetric_difference</span><span class="pgcssp">(</span><span class="pgcssn">B</span><span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">{</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">5</span><span class="pgcssp">}</span>
+</pre></div>
+</td></tr></table><p><strong>frozenset</strong> has the same interface but returns an inmutable <strong>set</strong> object.</p>
+</div>
+<div class="section" id="itertools-dropwhile-and-takewhile-to-filter-from-an-iterator">
+<h3>Itertools' dropwhile and takewhile to filter from an iterator</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">itertools</span> <span class="pgcsskn">import</span>  <span class="pgcssn">dropwhile</span>
+
+<span class="pgcssn">numbers</span> <span class="pgcsso">=</span> <span class="pgcssp">[</span><span class="pgcsso">-</span><span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">]</span>
+
+<span class="pgcssn">f</span> <span class="pgcsso">=</span> <span class="pgcssk">lambda</span> <span class="pgcssn">x</span><span class="pgcssp">:</span> <span class="pgcssn">x</span> <span class="pgcsso">&lt;</span> <span class="pgcssmi">1</span>
+
+<span class="pgcssnb">list</span> <span class="pgcssp">(</span> <span class="pgcssn">dropwhile</span> <span class="pgcssp">(</span><span class="pgcssn">f</span><span class="pgcssp">,</span> <span class="pgcssn">numbers</span><span class="pgcssp">)</span> <span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span>  <span class="pgcssp">[</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">]</span>
+</pre></div>
+</td></tr></table><p><strong>takewhile</strong>  takes the items if <em>True</em>. The difference with built-in function <strong>filter</strong>
+is that the iteration stops whenever the test-function is false.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssn">numbers</span> <span class="pgcsso">=</span> <span class="pgcssp">[</span><span class="pgcsso">-</span><span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">4</span><span class="pgcssp">]</span>
+<span class="pgcssnb">list</span><span class="pgcssp">(</span><span class="pgcssn">dropwhile</span><span class="pgcssp">(</span><span class="pgcssn">f</span><span class="pgcssp">,</span> <span class="pgcssn">numbers</span><span class="pgcssp">))</span>
+
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">[</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmi">4</span><span class="pgcssp">]</span>
+</pre></div>
+</td></tr></table><p>As <a class="reference external" href="https://twitter.com/jgomo3/status/1248023890342920194">&#64;jgomo3</a> Observes, one way to think about those functions is that they simply divide a sequence in halves.</p>
+<blockquote>
+takewhile gives you the first part.
+dropwhile the last part.</blockquote>
+</div>
+<div class="section" id="traspose-a-matrix-with-list-comprehensions">
+<h3>Traspose a matrix with List Comprehensions</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcssn">M</span> <span class="pgcsso">=</span> <span class="pgcssp">[[</span><span class="pgcssmi">1</span><span class="pgcssp">,</span><span class="pgcssmi">2</span><span class="pgcssp">,</span><span class="pgcssmi">3</span><span class="pgcssp">],</span>
+     <span class="pgcssp">[</span><span class="pgcssmi">4</span><span class="pgcssp">,</span><span class="pgcssmi">5</span><span class="pgcssp">,</span><span class="pgcssmi">6</span><span class="pgcssp">],</span>
+     <span class="pgcssp">[</span><span class="pgcssmi">7</span><span class="pgcssp">,</span><span class="pgcssmi">8</span><span class="pgcssp">,</span><span class="pgcssmi">9</span><span class="pgcssp">]]</span>
+
+<span class="pgcssn">MT</span> <span class="pgcsso">=</span> <span class="pgcssp">[[</span><span class="pgcssn">row</span><span class="pgcssp">[</span><span class="pgcssn">i</span><span class="pgcssp">]</span> <span class="pgcssk">for</span> <span class="pgcssn">row</span> <span class="pgcssow">in</span> <span class="pgcssn">M</span><span class="pgcssp">]</span> <span class="pgcssk">for</span> <span class="pgcssn">i</span> <span class="pgcssow">in</span> <span class="pgcssnb">range</span><span class="pgcssp">(</span><span class="pgcssnb">len</span><span class="pgcssp">(</span><span class="pgcssn">M</span><span class="pgcssp">))]</span>
+
+<span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssn">MT</span><span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcssp">[[</span><span class="pgcssmi">1</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">7</span><span class="pgcssp">],</span> <span class="pgcssp">[</span><span class="pgcssmi">2</span><span class="pgcssp">,</span> <span class="pgcssmi">5</span><span class="pgcssp">,</span> <span class="pgcssmi">8</span><span class="pgcssp">],</span>  <span class="pgcssp">[</span><span class="pgcssmi">3</span><span class="pgcssp">,</span> <span class="pgcssmi">6</span><span class="pgcssp">,</span> <span class="pgcssmi">9</span><span class="pgcssp">]]</span>
+</pre></div>
+</td></tr></table><p>Also, NumPy provides methods to for easier matrix manipulation.</p>
+</div>
+<div class="section" id="datetime-to-utc">
+<h3>Datetime to UTC</h3>
+<p>To create timezone aware datetimes in Python:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">datetime</span> <span class="pgcsskn">import</span> <span class="pgcssn">datetime</span><span class="pgcssp">,</span> <span class="pgcssn">timezone</span><span class="pgcssp">,</span> <span class="pgcssn">timedelta</span>
+
+<span class="pgcssn">tz</span> <span class="pgcsso">=</span> <span class="pgcssn">timezone</span><span class="pgcssp">(</span><span class="pgcssn">timedelta</span><span class="pgcssp">(</span><span class="pgcssn">hours</span><span class="pgcsso">=-</span><span class="pgcssmi">6</span><span class="pgcssp">))</span>  <span class="pgcssc1"># UTC-6</span>
+<span class="pgcssn">local</span> <span class="pgcsso">=</span> <span class="pgcssn">datetime</span><span class="pgcssp">(</span><span class="pgcssmi">2020</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">16</span><span class="pgcssp">,</span> <span class="pgcssmi">13</span><span class="pgcssp">,</span> <span class="pgcssmi">40</span><span class="pgcssp">,</span> <span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssn">tzinfo</span><span class="pgcsso">=</span><span class="pgcssn">tz</span><span class="pgcssp">)</span>
+
+<span class="pgcssn">local</span><span class="pgcsso">.</span><span class="pgcssn">isoformat</span><span class="pgcssp">()</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcsss1">&#39;2020-04-16T13:40:00-06:00&#39;</span>
+</pre></div>
+</td></tr></table><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">datetime</span> <span class="pgcsskn">import</span> <span class="pgcssn">datetime</span><span class="pgcssp">,</span> <span class="pgcssn">timezone</span>
+
+<span class="pgcssc1"># assuming `local` is a datetime object</span>
+
+<span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssn">local</span><span class="pgcsso">.</span><span class="pgcssn">isoformat</span><span class="pgcssp">()</span> <span class="pgcssp">)</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcsss1">&#39;2020-04-16T13:40:00-06:00&#39;</span>
+
+<span class="pgcssn">local_in_utc</span> <span class="pgcsso">=</span> <span class="pgcssn">local</span><span class="pgcsso">.</span><span class="pgcssn">astimezone</span><span class="pgcssp">(</span><span class="pgcssn">timezone</span><span class="pgcsso">.</span><span class="pgcssn">utc</span><span class="pgcssp">)</span>
+
+<span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssn">local_in_utc</span><span class="pgcsso">.</span><span class="pgcssn">isoformat</span><span class="pgcssp">())</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcsss1">&#39;2020-04-16T19:40:00+00:00&#39;</span>
+</pre></div>
+</td></tr></table><p>You can always use <strong>pytz</strong> to handle timezones.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">datetime</span> <span class="pgcsskn">import</span> <span class="pgcssn">datetime</span>
+<span class="pgcsskn">from</span> <span class="pgcssnn">pytz</span> <span class="pgcsskn">import</span> <span class="pgcssn">timezone</span>
+
+<span class="pgcssn">dt</span> <span class="pgcsso">=</span> <span class="pgcssn">datetime</span><span class="pgcssp">(</span><span class="pgcssmi">2020</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">,</span> <span class="pgcssmi">16</span><span class="pgcssp">,</span> <span class="pgcssmi">13</span><span class="pgcssp">,</span> <span class="pgcssmi">40</span><span class="pgcssp">,</span> <span class="pgcssmi">0</span><span class="pgcssp">,</span> <span class="pgcssn">tzinfo</span><span class="pgcsso">=</span><span class="pgcssn">pytz</span><span class="pgcsso">.</span><span class="pgcssn">utc</span><span class="pgcssp">)</span>
+
+<span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssn">dt</span><span class="pgcsso">.</span><span class="pgcssn">isoformat</span><span class="pgcssp">())</span>
+<span class="pgcsso">&gt;&gt;</span> <span class="pgcsss1">&#39;2020-04-16T13:40:00+00:00&#39;</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="functools-singledispatch-to-achieve-parametric-polymorphism-in-python">
+<h3>functools.singledispatch  to achieve  parametric polymorphism in Python</h3>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">from</span> <span class="pgcssnn">functools</span> <span class="pgcsskn">import</span> <span class="pgcssn">singledispatch</span>
+
+
+<span class="pgcssnd">@singledispatch</span>
+<span class="pgcssk">def</span> <span class="pgcssnf">process</span><span class="pgcssp">(</span><span class="pgcssn">num</span><span class="pgcsso">=</span><span class="pgcsskc">None</span><span class="pgcssp">):</span>
+    <span class="pgcssk">raise</span> <span class="pgcssne">NotImplementedError</span><span class="pgcssp">(</span><span class="pgcsss2">&quot;Implement process function.&quot;</span><span class="pgcssp">)</span>
+
+<span class="pgcssnd">@process</span><span class="pgcsso">.</span><span class="pgcssn">register</span><span class="pgcssp">(</span><span class="pgcssnb">int</span><span class="pgcssp">)</span>
+<span class="pgcssk">def</span> <span class="pgcssnf">sub_process</span><span class="pgcssp">(</span><span class="pgcssn">num</span><span class="pgcssp">):</span>
+    <span class="pgcssc1"># processing interger</span>
+    <span class="pgcssk">return</span> <span class="pgcsssa">f</span><span class="pgcsss2">&quot;Integer </span><span class="pgcsssi">{</span><span class="pgcssn">num</span><span class="pgcsssi">}</span><span class="pgcsss2"> has been processed successfully!&quot;</span>
+
+<span class="pgcssnd">@process</span><span class="pgcsso">.</span><span class="pgcssn">register</span><span class="pgcssp">(</span><span class="pgcssnb">float</span><span class="pgcssp">)</span>
+<span class="pgcssk">def</span> <span class="pgcssnf">sub_process</span><span class="pgcssp">(</span><span class="pgcssn">num</span><span class="pgcssp">):</span>
+    <span class="pgcssc1"># processing float</span>
+    <span class="pgcssk">return</span> <span class="pgcsssa">f</span><span class="pgcsss2">&quot;Float </span><span class="pgcsssi">{</span><span class="pgcssn">num</span><span class="pgcsssi">}</span><span class="pgcsss2"> has been processed successfully!&quot;</span>
+
+<span class="pgcssc1"># use the function</span>
+<span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssn">process</span><span class="pgcssp">(</span><span class="pgcssmf">12.0</span><span class="pgcssp">))</span>
+<span class="pgcssnb">print</span><span class="pgcssp">(</span><span class="pgcssn">process</span><span class="pgcssp">(</span><span class="pgcssmi">1</span><span class="pgcssp">))</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://www.jackboot7.com/tag/python.html">python</a>
+      <a href="https://www.jackboot7.com/tag/tips.html">tips</a>
+      <a href="https://www.jackboot7.com/tag/lists.html">lists</a>
+      <a href="https://www.jackboot7.com/tag/functools.html">functools</a>
+      <a href="https://www.jackboot7.com/tag/itertools.html">itertools</a>
+      <a href="https://www.jackboot7.com/tag/timezone.html">timezone</a>
+    </p>
+  </div>
+
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'jackboot7';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>&copy;  2020</p>
+<p>    Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Luis Alberto Santana ",
+  "url" : "https://www.jackboot7.com",
+  "image": "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

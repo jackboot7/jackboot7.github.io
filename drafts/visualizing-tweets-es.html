@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/stylesheet/style.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/pygments/solarized-light.min.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/solid.css">
+
+    <link href="https://www.jackboot7.com/extra/custom.css" rel="stylesheet">
+
+    <link href="https://www.jackboot7.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Luis Alberto Santana Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43616963-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#FFF">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#FFF">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#FFF">
+
+<meta name="author" content="Luis Alberto Santana" />
+<meta name="description" content="El domingo 6 de diciembre se realizaron las elecciones parlamentarias en Venezuela. Utilicé esta oportunidad para obtener algunos datos del stream público de Twitter y usar gráficos para mostrar qué estaba pasando en las &#34;redes sociales&#39; ese día. Para esto, usé Python como lenguaje de programación. Los datos Decidí enfocarme en los tweets georeferenciados de mi ciudad (Caracas) durante un periodo de cinco días, dos días antes de las elecciones, el día de las elecciones, y dos días después. Para obtener los datos, utilicé Twython, una biblioteca con la que ya tenía experiencia, por lo tanto sería sencillo escribir un script que permitiera obtener los datos y guardarlos en un archivo de texto. Una vez que se han configurado las claves de API y OAUTH siguiendo la documentación de Twython, el próximo paso es obtener los datos que se originan en cierta ubicación, pasándole las coordenadas de la ubicación al API de streaming. Twitter usa un conjunto de límites para delimintar la ubicación de un tweet, sólo envía tweets dentro de esos límites. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22import json, os from twython import TwythonStreamer caracas_location = &#34;-67.017225,10.419554,-66.778716,10.52006&#34; class MyStreamer(TwythonStreamer): def on_success(self, data): if data[&#39;coordinates&#39;] is not None: with open(&#39;tweets.txt&#39;, &#39;a&#39;) as f: f.write(json.dumps(data)) f.write(&#39;\n&#39;) def on_error(self, status_code, data): with open(&#39;errors.txt&#39;, &#39;a&#39;) as f: f.write(&#39;error: {0}: {1}&#39;.format(status_code, data)) stream = MyStreamer(os.environ[&#39;APP_KEY&#39;], os.environ[&#39;APP_SECRET&#39;], os.environ[&#39;OAUTH_TOKEN&#39;], os.environ[&#39;OAUTH_TOKEN_SECRET&#39;]) stream.statuses.filter(locations=caracas_location) Como solamente quería obtener tweets georeferenciados, verifiqué cada tweet buscando la existencia del atributo coordinates, y sólo almacené tweets con datos de …" />
+<meta name="keywords" content="data, tweets, twitter, elections, visualize, folium, python, matplotlib, pylab">
+
+
+<meta property="og:site_name" content="Luis Alberto Santana"/>
+<meta property="og:title" content="Visualizando los tweets durante el fin de semana de las elecciones"/>
+<meta property="og:description" content="El domingo 6 de diciembre se realizaron las elecciones parlamentarias en Venezuela. Utilicé esta oportunidad para obtener algunos datos del stream público de Twitter y usar gráficos para mostrar qué estaba pasando en las &#34;redes sociales&#39; ese día. Para esto, usé Python como lenguaje de programación. Los datos Decidí enfocarme en los tweets georeferenciados de mi ciudad (Caracas) durante un periodo de cinco días, dos días antes de las elecciones, el día de las elecciones, y dos días después. Para obtener los datos, utilicé Twython, una biblioteca con la que ya tenía experiencia, por lo tanto sería sencillo escribir un script que permitiera obtener los datos y guardarlos en un archivo de texto. Una vez que se han configurado las claves de API y OAUTH siguiendo la documentación de Twython, el próximo paso es obtener los datos que se originan en cierta ubicación, pasándole las coordenadas de la ubicación al API de streaming. Twitter usa un conjunto de límites para delimintar la ubicación de un tweet, sólo envía tweets dentro de esos límites. 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22import json, os from twython import TwythonStreamer caracas_location = &#34;-67.017225,10.419554,-66.778716,10.52006&#34; class MyStreamer(TwythonStreamer): def on_success(self, data): if data[&#39;coordinates&#39;] is not None: with open(&#39;tweets.txt&#39;, &#39;a&#39;) as f: f.write(json.dumps(data)) f.write(&#39;\n&#39;) def on_error(self, status_code, data): with open(&#39;errors.txt&#39;, &#39;a&#39;) as f: f.write(&#39;error: {0}: {1}&#39;.format(status_code, data)) stream = MyStreamer(os.environ[&#39;APP_KEY&#39;], os.environ[&#39;APP_SECRET&#39;], os.environ[&#39;OAUTH_TOKEN&#39;], os.environ[&#39;OAUTH_TOKEN_SECRET&#39;]) stream.statuses.filter(locations=caracas_location) Como solamente quería obtener tweets georeferenciados, verifiqué cada tweet buscando la existencia del atributo coordinates, y sólo almacené tweets con datos de …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://www.jackboot7.com/drafts/visualizing-tweets-es.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2015-12-10 09:30:00-04:30"/>
+<meta property="article:modified_time" content="2015-12-15 18:04:00-04:30"/>
+<meta property="article:author" content="https://www.jackboot7.com/author/luis-alberto-santana.html">
+<meta property="article:section" content="programming"/>
+<meta property="article:tag" content="data"/>
+<meta property="article:tag" content="tweets"/>
+<meta property="article:tag" content="twitter"/>
+<meta property="article:tag" content="elections"/>
+<meta property="article:tag" content="visualize"/>
+<meta property="article:tag" content="folium"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="matplotlib"/>
+<meta property="article:tag" content="pylab"/>
+<meta property="og:image" content="https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150">
+
+  <title>Luis Alberto Santana &ndash; Visualizando los tweets durante el fin de semana de las elecciones</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://www.jackboot7.com">
+        <img src="https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150" alt="" title="">
+      </a>
+      <h1><a href="https://www.jackboot7.com"></a></h1>
+
+<p>@jackboot7</p>      <nav>
+        <ul class="list">
+
+            <li><a target="_blank" href="https://www.jackboot7.com/pages/about-me.html#about-me">About me</a></li>
+
+            <li><a target="_blank" href="https://www.jackboot7.com/engineering-management/" >Engineering Management Resources</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/jackboot7" target="_blank">
+            <i class="fab fa-github">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/jackboot7" target="_blank">
+            <i class="fab fa-twitter">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/lsantanaf" target="_blank">
+            <i class="fab fa-linkedin">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-stack-overflow" href="https://stackoverflow.com/users/1170195/luis-alberto-santana" target="_blank">
+            <i class="fab fa-stack-overflow">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-rss" href="feeds/all.atom.xml" target="_blank">
+            <i class="fas fa-rss">
+            </i>
+          </a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://www.jackboot7.com">    Home
+</a>
+
+
+      <a href="https://www.jackboot7.com/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="visualizing-tweets">Visualizando los tweets durante el fin de semana de las elecciones</h1>
+    <p>
+          Posted on Thursday, Dec 10, 2015 in <a href="https://www.jackboot7.com/category/programming.html">programming</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>El domingo 6 de diciembre se realizaron las elecciones parlamentarias en Venezuela. Utilicé esta oportunidad para obtener algunos datos del stream público de Twitter y usar gráficos para mostrar qué estaba pasando en las &quot;<cite>redes sociales</cite>' ese día. Para esto, usé Python como lenguaje de programación.</p>
+<div class="section" id="los-datos">
+<h2><a class="reference internal" href="#los-datos">Los datos</a></h2>
+<p>Decidí enfocarme en los tweets georeferenciados de mi ciudad (Caracas) durante un periodo de cinco días, dos días antes de las elecciones, el día de las elecciones, y dos días después.</p>
+<p>Para obtener los datos, utilicé <a class="reference external" href="https://pypi.python.org/pypi/twython/">Twython</a>, una biblioteca con la que ya tenía experiencia, por lo tanto sería sencillo escribir un script que permitiera obtener los datos y guardarlos en un archivo de texto.</p>
+<p>Una vez que se han configurado las claves de <cite>API</cite> y <cite>OAUTH</cite> siguiendo la <a class="reference external" href="http://twython.readthedocs.org/en/latest/usage/starting_out.html">documentación de Twython</a>, el próximo paso es obtener los datos que se originan en cierta ubicación, pasándole las coordenadas de la ubicación al API de streaming. Twitter usa un conjunto de límites para delimintar la ubicación de un tweet, sólo envía tweets dentro de esos límites.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">import</span> <span class="pgcssnn">json</span><span class="pgcsso">,</span> <span class="pgcssnn">os</span>
+<span class="pgcsskn">from</span> <span class="pgcssnn">twython</span> <span class="pgcsskn">import</span> <span class="pgcssn">TwythonStreamer</span>
+
+<span class="pgcssn">caracas_location</span> <span class="pgcsso">=</span> <span class="pgcsss2">&quot;-67.017225,10.419554,-66.778716,10.52006&quot;</span>
+
+<span class="pgcssk">class</span> <span class="pgcssnc">MyStreamer</span><span class="pgcssp">(</span><span class="pgcssn">TwythonStreamer</span><span class="pgcssp">):</span>
+    <span class="pgcssk">def</span> <span class="pgcssnf">on_success</span><span class="pgcssp">(</span><span class="pgcssbp">self</span><span class="pgcssp">,</span> <span class="pgcssn">data</span><span class="pgcssp">):</span>
+        <span class="pgcssk">if</span> <span class="pgcssn">data</span><span class="pgcssp">[</span><span class="pgcsss1">&#39;coordinates&#39;</span><span class="pgcssp">]</span> <span class="pgcssow">is</span> <span class="pgcssow">not</span> <span class="pgcsskc">None</span><span class="pgcssp">:</span>
+            <span class="pgcssk">with</span> <span class="pgcssnb">open</span><span class="pgcssp">(</span><span class="pgcsss1">&#39;tweets.txt&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">)</span> <span class="pgcssk">as</span> <span class="pgcssn">f</span><span class="pgcssp">:</span>
+                <span class="pgcssn">f</span><span class="pgcsso">.</span><span class="pgcssn">write</span><span class="pgcssp">(</span><span class="pgcssn">json</span><span class="pgcsso">.</span><span class="pgcssn">dumps</span><span class="pgcssp">(</span><span class="pgcssn">data</span><span class="pgcssp">))</span>
+                <span class="pgcssn">f</span><span class="pgcsso">.</span><span class="pgcssn">write</span><span class="pgcssp">(</span><span class="pgcsss1">&#39;</span><span class="pgcssse">\n</span><span class="pgcsss1">&#39;</span><span class="pgcssp">)</span>
+
+    <span class="pgcssk">def</span> <span class="pgcssnf">on_error</span><span class="pgcssp">(</span><span class="pgcssbp">self</span><span class="pgcssp">,</span> <span class="pgcssn">status_code</span><span class="pgcssp">,</span> <span class="pgcssn">data</span><span class="pgcssp">):</span>
+        <span class="pgcssk">with</span> <span class="pgcssnb">open</span><span class="pgcssp">(</span><span class="pgcsss1">&#39;errors.txt&#39;</span><span class="pgcssp">,</span> <span class="pgcsss1">&#39;a&#39;</span><span class="pgcssp">)</span> <span class="pgcssk">as</span> <span class="pgcssn">f</span><span class="pgcssp">:</span>
+            <span class="pgcssn">f</span><span class="pgcsso">.</span><span class="pgcssn">write</span><span class="pgcssp">(</span><span class="pgcsss1">&#39;error: </span><span class="pgcsssi">{0}</span><span class="pgcsss1">: </span><span class="pgcsssi">{1}</span><span class="pgcsss1">&#39;</span><span class="pgcsso">.</span><span class="pgcssn">format</span><span class="pgcssp">(</span><span class="pgcssn">status_code</span><span class="pgcssp">,</span> <span class="pgcssn">data</span><span class="pgcssp">))</span>
+
+
+
+<span class="pgcssn">stream</span> <span class="pgcsso">=</span> <span class="pgcssn">MyStreamer</span><span class="pgcssp">(</span><span class="pgcssn">os</span><span class="pgcsso">.</span><span class="pgcssn">environ</span><span class="pgcssp">[</span><span class="pgcsss1">&#39;APP_KEY&#39;</span><span class="pgcssp">],</span> <span class="pgcssn">os</span><span class="pgcsso">.</span><span class="pgcssn">environ</span><span class="pgcssp">[</span><span class="pgcsss1">&#39;APP_SECRET&#39;</span><span class="pgcssp">],</span>
+                        <span class="pgcssn">os</span><span class="pgcsso">.</span><span class="pgcssn">environ</span><span class="pgcssp">[</span><span class="pgcsss1">&#39;OAUTH_TOKEN&#39;</span><span class="pgcssp">],</span> <span class="pgcssn">os</span><span class="pgcsso">.</span><span class="pgcssn">environ</span><span class="pgcssp">[</span><span class="pgcsss1">&#39;OAUTH_TOKEN_SECRET&#39;</span><span class="pgcssp">])</span>
+
+<span class="pgcssn">stream</span><span class="pgcsso">.</span><span class="pgcssn">statuses</span><span class="pgcsso">.</span><span class="pgcssn">filter</span><span class="pgcssp">(</span><span class="pgcssn">locations</span><span class="pgcsso">=</span><span class="pgcssn">caracas_location</span><span class="pgcssp">)</span>
+</pre></div>
+</td></tr></table><p>Como solamente quería obtener tweets georeferenciados, verifiqué cada tweet buscando la existencia del atributo <cite>coordinates</cite>, y sólo almacené tweets con datos de geolocalización (lat/long). Luego de ejecutar el script durante algunos días, contaba con ~50.000 tweets para empezar a jugar.</p>
+</div>
+<div class="section" id="visualizando-los-datos">
+<h2><a class="reference internal" href="#visualizando-los-datos">Visualizando los Datos</a></h2>
+<div class="section" id="donde-estaban-ubicados-esos-tweets">
+<h3><a class="reference internal" href="#donde-estaban-ubicados-esos-tweets">¿Dónde estaban ubicados esos tweets?</a></h3>
+<p>Lo primero que quería hacer con los datos era ver dónde se originaban los tweets durante ese periodo. Decidí usar un <a class="reference external" href="https://en.wikipedia.org/wiki/Heat_map">heatmap</a> sobre un mapa de la ciudad. Utilicé la versión en desarrollo de <a class="reference external" href="http://folium.readthedocs.org/en/latest/">Folium</a>, que implementa mapas en Python basados en <cite>Leafleat.js</cite> y sus plugins.</p>
+<img alt="Heatmap" class="align-center" src="https://www.jackboot7.com/images/heatmap.jpeg" style="width: 750px; height: 450px;" />
+<p>Haz click aquí para ver la <a class="reference external" href="https://www.jackboot7.com/files/heatmap.html">versión completa</a> e interactiva del heatmap (<strong>advertencia</strong> archivo pesado!)</p>
+<p>El código usado para generar el mapa, una vez se cargaron los datos en una lista llamada <cite>data</cite> es tan simple como:</p>
+<ul class="simple">
+<li>Crear un mapa centrado en Caracas (<cite>10.497084, -66.8854171</cite>).</li>
+<li>Agregar cada punto de dato en el mapa usando el método <cite>add_children</cite>.</li>
+<li>Escribir el archivo HTML.</li>
+</ul>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">import</span> <span class="pgcssnn">folium</span>
+<span class="pgcsskn">from</span> <span class="pgcssnn">folium</span> <span class="pgcsskn">import</span> <span class="pgcssn">plugins</span>
+
+<span class="pgcssc1"># Create a heatmap with the data.</span>
+<span class="pgcssn">heatmap_map</span> <span class="pgcsso">=</span> <span class="pgcssn">folium</span><span class="pgcsso">.</span><span class="pgcssn">Map</span><span class="pgcssp">(</span><span class="pgcssn">location</span><span class="pgcsso">=</span><span class="pgcssp">[</span><span class="pgcssmf">10.497084</span><span class="pgcssp">,</span> <span class="pgcsso">-</span><span class="pgcssmf">66.8854171</span><span class="pgcssp">],</span> <span class="pgcssn">zoom_start</span><span class="pgcsso">=</span><span class="pgcssmi">12</span><span class="pgcssp">)</span>
+<span class="pgcssn">heatmap_map</span><span class="pgcsso">.</span><span class="pgcssn">add_children</span><span class="pgcssp">(</span><span class="pgcssn">plugins</span><span class="pgcsso">.</span><span class="pgcssn">HeatMap</span><span class="pgcssp">([[</span><span class="pgcssn">t</span><span class="pgcssp">[</span><span class="pgcssmi">1</span><span class="pgcssp">],</span> <span class="pgcssn">t</span><span class="pgcssp">[</span><span class="pgcssmi">0</span><span class="pgcssp">]]</span> <span class="pgcssk">for</span> <span class="pgcssn">t</span> <span class="pgcssow">in</span> <span class="pgcssp">[</span><span class="pgcssn">tweet</span><span class="pgcssp">[</span><span class="pgcsss2">&quot;coordinates&quot;</span><span class="pgcssp">][</span><span class="pgcsss2">&quot;coordinates&quot;</span><span class="pgcssp">]</span> <span class="pgcssk">for</span> <span class="pgcssn">tweet</span> <span class="pgcssow">in</span> <span class="pgcssn">data</span><span class="pgcssp">]]))</span>
+<span class="pgcssn">heatmap_map</span><span class="pgcsso">.</span><span class="pgcssn">save</span><span class="pgcssp">(</span><span class="pgcsss2">&quot;heatmap.html&quot;</span><span class="pgcssp">)</span>
+</pre></div>
+</td></tr></table><p><strong>NOTE</strong>: Las coordenadas de Twitter vienen en formato <cite>geoJSON</cite>, esto es: longitud primero, y luego latitud. El código las intercambia para agregar puntos de <cite>(lat, long</cite>) al mapa.</p>
+<p>En el <cite>heatmap</cite>, se pueden ver los parques y áreas protegidas en Caracas, las cuales no tuvieron ningún tipo de actividad. De igual manera, se puede ver que hay mucha menos actividad en <a class="reference external" href="https://en.wikipedia.org/wiki/Caricuao">Caricuao</a> que en el resto de la ciudad. Esto es interesante, dado que Caricuao una zona residencial bastante extensa.</p>
+</div>
+<div class="section" id="como-se-ve-la-actividad">
+<h3><a class="reference internal" href="#como-se-ve-la-actividad">¿Cómo se ve la actividad?</a></h3>
+<p>So, there's a heatmap of the location of the tweets, but how can we represent the activity over the five days?</p>
+<p>I thought that a calendar type chart, such as the one that shows the contributions activity on <a class="reference external" href="https://github.com">Github's</a> profiles, was an interesting way to represent the data visually. Grouping the tweets by day and hours in cells, and increasing the intensity of the cell depending on the total amount of tweets during that moment.</p>
+<p>To achieve this, I decided to use <a class="reference external" href="http://matplotlib.org">matplotlib</a> as the plotting library, insted of using a Javascript based library such as <cite>D3.js</cite>.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="pgcsskn">import</span> <span class="pgcssnn">matplotlib</span>
+<span class="pgcsskn">import</span> <span class="pgcssnn">matplotlib.pyplot</span> <span class="pgcssk">as</span> <span class="pgcssnn">plt</span>
+<span class="pgcsskn">from</span> <span class="pgcssnn">matplotlib.ticker</span> <span class="pgcsskn">import</span> <span class="pgcssn">FuncFormatter</span><span class="pgcssp">,</span> <span class="pgcssn">MaxNLocator</span>
+
+<span class="pgcsskn">import</span> <span class="pgcssnn">numpy</span> <span class="pgcssk">as</span> <span class="pgcssnn">np</span>
+
+<span class="pgcssc1">#</span>
+<span class="pgcssc1"># Load the dataset into a nested list with the `Date` and the `hour` data</span>
+<span class="pgcssc1">#</span>
+
+<span class="pgcssn">fig</span><span class="pgcssp">,</span> <span class="pgcssn">ax</span> <span class="pgcsso">=</span> <span class="pgcssn">plt</span><span class="pgcsso">.</span><span class="pgcssn">subplots</span><span class="pgcssp">(</span><span class="pgcssn">figsize</span><span class="pgcsso">=</span><span class="pgcssp">(</span><span class="pgcssmi">10</span><span class="pgcssp">,</span> <span class="pgcssmi">4</span><span class="pgcssp">))</span>
+<span class="pgcssn">image</span> <span class="pgcsso">=</span> <span class="pgcssn">np</span><span class="pgcsso">.</span><span class="pgcssn">array</span><span class="pgcssp">(</span><span class="pgcssn">data_array</span><span class="pgcssp">)</span>
+<span class="pgcssn">cax</span> <span class="pgcsso">=</span> <span class="pgcssn">ax</span><span class="pgcsso">.</span><span class="pgcssn">imshow</span><span class="pgcssp">(</span><span class="pgcssn">image</span><span class="pgcssp">,</span> <span class="pgcssn">cmap</span><span class="pgcsso">=</span><span class="pgcssn">plt</span><span class="pgcsso">.</span><span class="pgcssn">cm</span><span class="pgcsso">.</span><span class="pgcssn">magma</span><span class="pgcssp">,</span> <span class="pgcssn">interpolation</span><span class="pgcsso">=</span><span class="pgcsss1">&#39;nearest&#39;</span><span class="pgcssp">)</span>
+
+<span class="pgcssc1">#</span>
+<span class="pgcssc1"># Add some parameters for the ticks</span>
+<span class="pgcssc1">#</span>
+
+<span class="pgcssc1"># Add colorbar/legend</span>
+<span class="pgcssn">cbar</span> <span class="pgcsso">=</span> <span class="pgcssn">fig</span><span class="pgcsso">.</span><span class="pgcssn">colorbar</span><span class="pgcssp">(</span><span class="pgcssn">cax</span><span class="pgcssp">,</span> <span class="pgcssn">orientation</span><span class="pgcsso">=</span><span class="pgcsss1">&#39;horizontal&#39;</span><span class="pgcssp">)</span>
+
+<span class="pgcssn">plt</span><span class="pgcsso">.</span><span class="pgcssn">subplots_adjust</span><span class="pgcssp">(</span><span class="pgcssn">wspace</span><span class="pgcsso">=</span><span class="pgcssmi">5</span><span class="pgcssp">,</span> <span class="pgcssn">hspace</span><span class="pgcsso">=</span><span class="pgcssmi">5</span><span class="pgcssp">)</span>
+<span class="pgcssn">plt</span><span class="pgcsso">.</span><span class="pgcssn">savefig</span><span class="pgcssp">(</span><span class="pgcsss2">&quot;tweet_frequency_heatmap.png&quot;</span><span class="pgcssp">)</span>
+</pre></div>
+</td></tr></table><p>With some visual adjustments such as adding labels to the ticks, I've got the graphic I wanted.</p>
+<img alt="Tweets by hour" class="align-center" src="https://www.jackboot7.com/images/tweet_frequency_heatmap.png" style="width: 800px; height: 320px;" />
+<p><strong>NOTE</strong>: The lack of tweets during the morning of December 4, is due the absence of data in that period.</p>
+<p>As expected, after midnight, when most people are sleeping, the amount of tweets is very close to zero in normal days (Dec 04, Dec 05, Dec 08). On the election day, the graph shows above &quot;normal&quot; activity, and we can see the exact moment when the results of the election were announced on national TV. Between 12 a.m and 2 a.m. of Dec. 07 the amount of tweets in Caracas duplicated.</p>
+<p><strong>Pronto publicaré nuevos gráficos</strong></p>
+</div>
+</div>
+<div class="section" id="herramientas">
+<h2><a class="reference internal" href="#herramientas">Herramientas</a></h2>
+<p>Usé este pequeño proyecto para investigar y aprender lo básico de las herramientas disponibles para representar datos visualmente (gráficos, mapas, etc.) algunas de las herramientas que probé fueron:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://matplotlib.org">Matplotlib</a></li>
+<li><a class="reference external" href="http://folium.readthedocs.org/en/latest/">Folium</a></li>
+<li><a class="reference external" href="https://pypi.python.org/pypi/mplleaflet/0.0.5">mplleaflet</a></li>
+<li><a class="reference external" href="https://plot.ly/">Plotly</a></li>
+<li><a class="reference external" href="http://leafletjs.com">leaflet.js</a></li>
+</ul>
+<p>En el wiki de Python se puede conseguir una <a class="reference external" href="https://wiki.python.org/moin/NumericAndScientific/Plotting">lista muy completa</a> de bibliotecas y recursos para visualizar datos.</p>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://www.jackboot7.com/tag/data.html">data</a>
+      <a href="https://www.jackboot7.com/tag/tweets.html">tweets</a>
+      <a href="https://www.jackboot7.com/tag/twitter.html">twitter</a>
+      <a href="https://www.jackboot7.com/tag/elections.html">elections</a>
+      <a href="https://www.jackboot7.com/tag/visualize.html">visualize</a>
+      <a href="https://www.jackboot7.com/tag/folium.html">folium</a>
+      <a href="https://www.jackboot7.com/tag/python.html">python</a>
+      <a href="https://www.jackboot7.com/tag/matplotlib.html">matplotlib</a>
+      <a href="https://www.jackboot7.com/tag/pylab.html">pylab</a>
+    </p>
+  </div>
+
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'jackboot7';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>&copy;  2020</p>
+<p>    Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Luis Alberto Santana ",
+  "url" : "https://www.jackboot7.com",
+  "image": "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

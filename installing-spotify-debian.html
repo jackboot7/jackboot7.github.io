@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/stylesheet/style.min.css">
+
+
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/pygments/solarized-light.min.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://www.jackboot7.com/theme/font-awesome/css/solid.css">
+
+    <link href="https://www.jackboot7.com/extra/custom.css" rel="stylesheet">
+
+    <link href="https://www.jackboot7.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Luis Alberto Santana Atom">
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43616963-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#FFF">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#FFF">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#FFF">
+
+<meta name="author" content="Luis Alberto Santana" />
+<meta name="description" content="A quick guide of the steps I took to install Spotify version 1.0 in Debian 9.0. First of all, the Spotify team doesn&#39;t (officially) support the Linux version, so even if they claim to be compatible with de lastest version of Ubuntu&#39;s LTS, it tends to fall behind with the dependencies. With a fresh install of Debian, you&#39;ll need dirmngr installed before adding the Spotify repository to your apt list: 1$ sudo apt install dirmngr After dirmngr installation, you&#39;ll need to add the Spotify keys and repositories (just check the instructions in the Spotify for Linux website): 1 2$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 $ echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list If you follow the instructions at Spotify&#39;s website, the installation should be ready with the update and install commands from apt: 1$ sudo apt update &amp;&amp; sudo apt install spotify-client But is a common case that not all the dependencies are up to date between Spotify and Debian, so you&#39;ll need to add them &#34;by hand&#34;. 1 2 3 4 5 6The following packages have unmet dependencies: spotify-client : Depends: libssl1.0.0 but it is not installable Recommends: libavcodec54 but it is not installable or libavcodec-extra-54 but it is not installable Recommends: libavformat54 but it is not installable E: Unable to correct problems, you have held broken packages. First you&#39;ll have to download the exact same version of the package that Spotify needs, in my case it was libssl1.0.0, I downloaded it from: https://packages.debian.org/jessie/libssl1.0.0. Then just install it with apt and try re-installing Spotify: 1 2 3$ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0 …" />
+<meta name="keywords" content="personal, spotify, debian, music, install, apt">
+
+<link rel="alternate" href="https://www.jackboot7.com/installing-spotify-debian.html" hreflang="en" />
+<link rel="alternate" href="https://www.jackboot7.com/installing-spotify-debian-es.html" hreflang="es" />
+
+<meta property="og:site_name" content="Luis Alberto Santana"/>
+<meta property="og:title" content="A Quick Guide to Install Spotify in Debian 9.0"/>
+<meta property="og:description" content="A quick guide of the steps I took to install Spotify version 1.0 in Debian 9.0. First of all, the Spotify team doesn&#39;t (officially) support the Linux version, so even if they claim to be compatible with de lastest version of Ubuntu&#39;s LTS, it tends to fall behind with the dependencies. With a fresh install of Debian, you&#39;ll need dirmngr installed before adding the Spotify repository to your apt list: 1$ sudo apt install dirmngr After dirmngr installation, you&#39;ll need to add the Spotify keys and repositories (just check the instructions in the Spotify for Linux website): 1 2$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886 $ echo deb http://repository.spotify.com stable non-free | sudo tee /etc/apt/sources.list.d/spotify.list If you follow the instructions at Spotify&#39;s website, the installation should be ready with the update and install commands from apt: 1$ sudo apt update &amp;&amp; sudo apt install spotify-client But is a common case that not all the dependencies are up to date between Spotify and Debian, so you&#39;ll need to add them &#34;by hand&#34;. 1 2 3 4 5 6The following packages have unmet dependencies: spotify-client : Depends: libssl1.0.0 but it is not installable Recommends: libavcodec54 but it is not installable or libavcodec-extra-54 but it is not installable Recommends: libavformat54 but it is not installable E: Unable to correct problems, you have held broken packages. First you&#39;ll have to download the exact same version of the package that Spotify needs, in my case it was libssl1.0.0, I downloaded it from: https://packages.debian.org/jessie/libssl1.0.0. Then just install it with apt and try re-installing Spotify: 1 2 3$ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0 …"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://www.jackboot7.com/installing-spotify-debian.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-07-05 09:30:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://www.jackboot7.com/author/luis-alberto-santana.html">
+<meta property="article:section" content="personal"/>
+<meta property="article:tag" content="personal"/>
+<meta property="article:tag" content="spotify"/>
+<meta property="article:tag" content="debian"/>
+<meta property="article:tag" content="music"/>
+<meta property="article:tag" content="install"/>
+<meta property="article:tag" content="apt"/>
+<meta property="og:image" content="https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150">
+
+  <title>Luis Alberto Santana &ndash; A Quick Guide to Install Spotify in Debian 9.0</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://www.jackboot7.com">
+        <img src="https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150" alt="" title="">
+      </a>
+      <h1><a href="https://www.jackboot7.com"></a></h1>
+
+<p>@jackboot7</p>      <nav>
+        <ul class="list">
+
+            <li><a target="_blank" href="https://www.jackboot7.com/pages/about-me.html#about-me">About me</a></li>
+
+            <li><a target="_blank" href="https://www.jackboot7.com/engineering-management/" >Engineering Management Resources</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+          <li>
+            <a  class="sc-github" href="https://github.com/jackboot7" target="_blank">
+            <i class="fab fa-github">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-twitter" href="https://twitter.com/jackboot7" target="_blank">
+            <i class="fab fa-twitter">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-linkedin" href="https://www.linkedin.com/in/lsantanaf" target="_blank">
+            <i class="fab fa-linkedin">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-stack-overflow" href="https://stackoverflow.com/users/1170195/luis-alberto-santana" target="_blank">
+            <i class="fab fa-stack-overflow">
+            </i>
+          </a></li>
+          <li>
+            <a  class="sc-rss" href="feeds/all.atom.xml" target="_blank">
+            <i class="fas fa-rss">
+            </i>
+          </a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://www.jackboot7.com">    Home
+</a>
+
+
+      <a href="https://www.jackboot7.com/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+          <div class="translations">
+    <a class="active" href="https://www.jackboot7.com/installing-spotify-debian.html">en</a>
+        <a href="https://www.jackboot7.com/installing-spotify-debian-es.html">es</a>
+    </div>
+
+    <h1 id="installing-spotify-debian">A Quick Guide to Install Spotify in Debian 9.0</h1>
+    <p>
+          Posted on Wednesday, Jul 05, 2017 in <a href="https://www.jackboot7.com/category/personal.html">personal</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>A quick guide of the steps I took to install <em>Spotify version 1.0</em> in Debian 9.0. First of all, the Spotify team doesn't (officially) support the Linux version, so even if they claim to be compatible with de lastest version of Ubuntu's LTS, it tends to fall behind with the dependencies.</p>
+<p>With a fresh install of Debian, you'll need <em>dirmngr</em> installed before adding the Spotify repository to your <em>apt</em> list:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ sudo apt install dirmngr
+</pre></div>
+</td></tr></table><p>After <em>dirmngr</em> installation, you'll need to add the Spotify keys and repositories (just check the instructions in the <a class="reference external" href="https://www.spotify.com/mx/download/linux/">Spotify for Linux</a> website):</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+$ <span class="pgcssnb">echo</span> deb http://repository.spotify.com stable non-free <span class="pgcssp">|</span> sudo tee /etc/apt/sources.list.d/spotify.list
+</pre></div>
+</td></tr></table><p>If you follow the instructions at Spotify's website, the installation should be ready with the update and install commands from apt:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ sudo apt update <span class="pgcsso">&amp;&amp;</span> sudo apt install spotify-client
+</pre></div>
+</td></tr></table><p>But is a common case that not all the dependencies are up to date between Spotify and Debian, so you'll need to add them &quot;by hand&quot;.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>The following packages have unmet dependencies:
+ spotify-client : Depends: libssl1.0.0 but it is not installable
+                                  Recommends: libavcodec54 but it is not installable or
+                                                          libavcodec-extra-54 but it is not installable
+                                  Recommends: libavformat54 but it is not installable
+E: Unable to correct problems, you have held broken packages.
+</pre></div>
+</td></tr></table><p>First you'll have to download the exact same version of the package that Spotify needs, in my case it was <em>libssl1.0.0</em>, I downloaded it from: <a class="reference external" href="`https://packages.debian.org/jessie/libssl1.0.0`">https://packages.debian.org/jessie/libssl1.0.0</a>.</p>
+<p>Then just install it with apt and try re-installing Spotify:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb
+$ sudo apt install ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb  <span class="pgcssc1"># This can be replaced with sudo dpkg -i ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb</span>
+$ sudo apt install spotify-client
+</pre></div>
+</td></tr></table><p>You should be able to use Spotify in your Debian 9.0 following these steps!</p>
+<p><strong>(If you have a premium account, you can use Spotify inside of third party clients such as Clementine in KDE)</strong></p>
+<div class="section" id="sources">
+<h2>Sources:</h2>
+<ul class="simple">
+<li><a class="reference external" href="https://community.spotify.com/t5/Desktop-Linux-Windows-Web-Player/Debian-9-higher-versions-dependencies/m-p/1721521#M190484">Spotify's community forum</a></li>
+<li><a class="reference external" href="https://wiki.debian.org/spotify">Debian Wiki for Spotify</a></li>
+</ul>
+</div>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://www.jackboot7.com/tag/personal.html">personal</a>
+      <a href="https://www.jackboot7.com/tag/spotify.html">spotify</a>
+      <a href="https://www.jackboot7.com/tag/debian.html">debian</a>
+      <a href="https://www.jackboot7.com/tag/music.html">music</a>
+      <a href="https://www.jackboot7.com/tag/install.html">install</a>
+      <a href="https://www.jackboot7.com/tag/apt.html">apt</a>
+    </p>
+  </div>
+
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'jackboot7';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>&copy;  2020</p>
+<p>    Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Luis Alberto Santana ",
+  "url" : "https://www.jackboot7.com",
+  "image": "https://2.gravatar.com/avatar/e426d5ca1f331cb8418614b7439a8dcd?v=2&s=150",
+  "description": ""
+}
+</script>
+
+
+</body>
+</html>

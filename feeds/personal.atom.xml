@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Luis Alberto Santana - personal</title><link href="https://www.jackboot7.com/" rel="alternate"></link><link href="https://www.jackboot7.com/feeds/personal.atom.xml" rel="self"></link><id>https://www.jackboot7.com/</id><updated>2017-07-05T09:30:00-04:00</updated><subtitle>@jackboot7</subtitle><entry><title>A Quick Guide to Install Spotify in Debian 9.0</title><link href="https://www.jackboot7.com/installing-spotify-debian.html" rel="alternate"></link><published>2017-07-05T09:30:00-04:00</published><updated>2017-07-05T09:30:00-04:00</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2017-07-05:/installing-spotify-debian.html</id><summary type="html">&lt;p&gt;A quick guide of the steps I took to install &lt;em&gt;Spotify version 1.0&lt;/em&gt; in Debian 9.0. First of all, the Spotify team doesn't (officially) support the Linux version, so even if they claim to be compatible with de lastest version of Ubuntu's LTS, it tends to fall behind with the dependencies.&lt;/p&gt;
+&lt;p&gt;With a fresh install of Debian, you'll need &lt;em&gt;dirmngr&lt;/em&gt; installed before adding the Spotify repository to your &lt;em&gt;apt&lt;/em&gt; list:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt install dirmngr
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;After &lt;em&gt;dirmngr&lt;/em&gt; installation, you'll need to add the Spotify keys and repositories (just check the instructions in the &lt;a class="reference external" href="https://www.spotify.com/mx/download/linux/"&gt;Spotify for Linux&lt;/a&gt; website):&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+$ &lt;span class="pgcssnb"&gt;echo&lt;/span&gt; deb http://repository.spotify.com stable non-free &lt;span class="pgcssp"&gt;|&lt;/span&gt; sudo tee /etc/apt/sources.list.d/spotify.list
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;If you follow the instructions at Spotify's website, the installation should be ready with the update and install commands from apt:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt update &lt;span class="pgcsso"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt install spotify-client
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;But is a common case that not all the dependencies are up to date between Spotify and Debian, so you'll need to add them &amp;quot;by hand&amp;quot;.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;The following packages have unmet dependencies:
+ spotify-client : Depends: libssl1.0.0 but it is not installable
+                                  Recommends: libavcodec54 but it is not installable or
+                                                          libavcodec-extra-54 but it is not installable
+                                  Recommends: libavformat54 but it is not installable
+E: Unable to correct problems, you have held broken packages.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;First you'll have to download the exact same version of the package that Spotify needs, in my case it was &lt;em&gt;libssl1.0.0&lt;/em&gt;, I downloaded it from: &lt;a class="reference external" href="`https://packages.debian.org/jessie/libssl1.0.0`"&gt;https://packages.debian.org/jessie/libssl1.0.0&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then just install it with apt and try re-installing Spotify:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0 …&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><content type="html">&lt;p&gt;A quick guide of the steps I took to install &lt;em&gt;Spotify version 1.0&lt;/em&gt; in Debian 9.0. First of all, the Spotify team doesn't (officially) support the Linux version, so even if they claim to be compatible with de lastest version of Ubuntu's LTS, it tends to fall behind with the dependencies.&lt;/p&gt;
+&lt;p&gt;With a fresh install of Debian, you'll need &lt;em&gt;dirmngr&lt;/em&gt; installed before adding the Spotify repository to your &lt;em&gt;apt&lt;/em&gt; list:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt install dirmngr
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;After &lt;em&gt;dirmngr&lt;/em&gt; installation, you'll need to add the Spotify keys and repositories (just check the instructions in the &lt;a class="reference external" href="https://www.spotify.com/mx/download/linux/"&gt;Spotify for Linux&lt;/a&gt; website):&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys BBEBDCB318AD50EC6865090613B00F1FD2C19886
+$ &lt;span class="pgcssnb"&gt;echo&lt;/span&gt; deb http://repository.spotify.com stable non-free &lt;span class="pgcssp"&gt;|&lt;/span&gt; sudo tee /etc/apt/sources.list.d/spotify.list
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;If you follow the instructions at Spotify's website, the installation should be ready with the update and install commands from apt:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ sudo apt update &lt;span class="pgcsso"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt install spotify-client
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;But is a common case that not all the dependencies are up to date between Spotify and Debian, so you'll need to add them &amp;quot;by hand&amp;quot;.&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;The following packages have unmet dependencies:
+ spotify-client : Depends: libssl1.0.0 but it is not installable
+                                  Recommends: libavcodec54 but it is not installable or
+                                                          libavcodec-extra-54 but it is not installable
+                                  Recommends: libavformat54 but it is not installable
+E: Unable to correct problems, you have held broken packages.
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;First you'll have to download the exact same version of the package that Spotify needs, in my case it was &lt;em&gt;libssl1.0.0&lt;/em&gt;, I downloaded it from: &lt;a class="reference external" href="`https://packages.debian.org/jessie/libssl1.0.0`"&gt;https://packages.debian.org/jessie/libssl1.0.0&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then just install it with apt and try re-installing Spotify:&lt;/p&gt;
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$ wget http://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb
+$ sudo apt install ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb  &lt;span class="pgcssc1"&gt;# This can be replaced with sudo dpkg -i ./libssl1.0.0_1.0.1t-1+deb8u6_amd64.deb&lt;/span&gt;
+$ sudo apt install spotify-client
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;You should be able to use Spotify in your Debian 9.0 following these steps!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;(If you have a premium account, you can use Spotify inside of third party clients such as Clementine in KDE)&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="section" id="sources"&gt;
+&lt;h2&gt;Sources:&lt;/h2&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://community.spotify.com/t5/Desktop-Linux-Windows-Web-Player/Debian-9-higher-versions-dependencies/m-p/1721521#M190484"&gt;Spotify's community forum&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="https://wiki.debian.org/spotify"&gt;Debian Wiki for Spotify&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</content><category term="personal"></category><category term="personal"></category><category term="spotify"></category><category term="debian"></category><category term="music"></category><category term="install"></category><category term="apt"></category></entry><entry><title>A Farewell to a Great Company</title><link href="https://www.jackboot7.com/farewell-posma-group.html" rel="alternate"></link><published>2016-11-08T09:30:00-04:00</published><updated>2016-11-08T09:30:00-04:00</updated><author><name>Luis Alberto Santana</name></author><id>tag:www.jackboot7.com,2016-11-08:/farewell-posma-group.html</id><content type="html">&lt;p&gt;This month marks my final month as a CTO/Lead at &lt;a class="reference external" href="http://www.posmagroup.com/"&gt;Posma Group&lt;/a&gt;. It's been six years of ups and downs, working in varied and interesting projects, but most of all, working with amazing people, both coworkers and clients. In six years, we went from just the 3 cofounders to a team of 20+ between two offices, working in lots of different projects.&lt;/p&gt;
+&lt;p&gt;Thanks to all the people who helped me grow and learn along the way. It was a great experience in so many ways.&lt;/p&gt;
+&lt;p&gt;I wish all the luck to Jorge and Oscar in their aim to keep growing the company and the great team of Posma Group. I'm sure we'll work together in some project, sometime in the future!&lt;/p&gt;
+&lt;p&gt;Now, let's see what comes next!&lt;/p&gt;
+&lt;img alt="Posma Group 2016" class="align-center" src="https://www.jackboot7.com/images/posma_group_2016.jpg" style="width: 750px; height: 354px;" /&gt;
+</content><category term="personal"></category><category term="personal"></category><category term="work"></category><category term="posma"></category><category term="posma group"></category><category term="career"></category></entry></feed>
